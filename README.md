@@ -1,4 +1,5 @@
 ## GitHub Stats
+![](https://komarev.com/ghpvc/?username=rowkav09&style=plastic&color=blueviolet)
 
 [![GitHub Stats](https://ghstats.dev/api/card?username=rowkav09&theme=sunset)](https://github.com/rowkav09/GitHub-profile-stats)
 
