@@ -12,6 +12,9 @@
 
 Play by clicking a cell button below. Each click opens a pre-filled issue that the action processes.
 
+### Stats Badges
+![Human Wins: 0](https://img.shields.io/badge/Human%20Wins-0-2ea44f?style=plastic) ![AI Wins: 0](https://img.shields.io/badge/AI%20Wins-0-d73a49?style=plastic) ![Draws: 0](https://img.shields.io/badge/Draws-0-6f42c1?style=plastic) ![Games Played: 0](https://img.shields.io/badge/Games%20Played-0-0366d6?style=plastic) ![Human Moves: 0](https://img.shields.io/badge/Human%20Moves-0-0e8a16?style=plastic)
+
 |   | 1 | 2 | 3 |
 |---|---|---|---|
 | 1 | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A1%2C1&labels=tic-tac-toe%2Cmove) | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A1%2C2&labels=tic-tac-toe%2Cmove) | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A1%2C3&labels=tic-tac-toe%2Cmove) |
@@ -23,9 +26,6 @@ Play by clicking a cell button below. Each click opens a pre-filled issue that t
 - AI: O (minimax)
 - Last result: No finished games yet
 - Last round winners: None yet
-
-### Stats Badges
-![Human Wins: 0](https://img.shields.io/badge/Human%20Wins-0-2ea44f?style=for-the-badge) ![AI Wins: 0](https://img.shields.io/badge/AI%20Wins-0-d73a49?style=for-the-badge) ![Draws: 0](https://img.shields.io/badge/Draws-0-6f42c1?style=for-the-badge) ![Games Played: 0](https://img.shields.io/badge/Games%20Played-0-0366d6?style=for-the-badge) ![Human Moves: 0](https://img.shields.io/badge/Human%20Moves-0-0e8a16?style=for-the-badge)
 
 Game auto-resets after each finished round and always stays playable.
 <!-- TICTACTOE_END -->

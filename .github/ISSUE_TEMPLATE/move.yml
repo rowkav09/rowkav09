@@ -1,6 +1,6 @@
 name: Tic Tac Toe Move
 description: Submit a move for the README Tic Tac Toe game
-title: "move:"
+title: "move:1,1"
 labels:
   - tic-tac-toe
   - move
@@ -8,9 +8,13 @@ body:
   - type: markdown
     attributes:
       value: |
-        Enter your move as `row,column` using values 1-3.
-        Example: `2,3`
-        The game auto-resets after each finished round.
+        How to play:
+        1. Keep the title in format `move:ROW,COL` with values `1-3`.
+        2. Example: `move:2,3`
+        3. Submit the issue.
+        4. The workflow creates a PR and the repo owner merges it to approve the move.
+        5. This issue gets an immediate status comment and a follow-up comment after merge with your latest stats.
+        6. The game auto-resets after each finished round.
   - type: input
     id: move
     attributes:

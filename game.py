@@ -156,7 +156,7 @@ def issue_url(repo: str, title: str, labels: str) -> str:
 def badge(label: str, value: str, color: str) -> str:
     label_enc = quote(label, safe="")
     value_enc = quote(str(value), safe="")
-    return f"![{label}: {value}](https://img.shields.io/badge/{label_enc}-{value_enc}-{color}?style=for-the-badge)"
+    return f"![{label}: {value}](https://img.shields.io/badge/{label_enc}-{value_enc}-{color}?style=plastic)"
 
 
 def ensure_player_stats(state: dict, username: str) -> dict:
@@ -170,6 +170,15 @@ def ensure_player_stats(state: dict, username: str) -> dict:
             "draws": 0,
         }
     return stats[username]
+
+
+def user_stats_summary(state: dict, username: str) -> str:
+    stats = state.get("player_stats", {}).get(username, {})
+    return (
+        f"moves={stats.get('moves_placed', 0)}, "
+        f"games={stats.get('games_played', 0)}, "
+        f"win_contributions={stats.get('wins_contributed', 0)}"
+    )
 
 
 def cell_render(state: dict, repo: str, r: int, c: int) -> str:
@@ -190,28 +199,7 @@ def render_section(state: dict, repo: str) -> str:
     rows.append("")
     rows.append("Play by clicking a cell button below. Each click opens a pre-filled issue that the action processes.")
     rows.append("")
-    rows.append("|   | 1 | 2 | 3 |")
-    rows.append("|---|---|---|---|")
-    for r in range(3):
-        line = [str(r + 1)]
-        for c in range(3):
-            line.append(cell_render(state, repo, r, c))
-        rows.append(f"| {' | '.join(line)} |")
-    rows.append("")
 
-    status_text = "Ongoing"
-    turn_text = state["current_turn"] if state["current_turn"] else "X"
-    rows.append(f"- Current turn: {turn_text}{' (you)' if turn_text == 'X' else ''}")
-    rows.append(f"- Status: {status_text}")
-    rows.append("- AI: O (minimax)")
-    rows.append(f"- Last result: {state.get('last_result', 'No finished games yet')}")
-    winners = state.get("last_winners", [])
-    if winners:
-        winners_text = ", ".join([f"@{w}" if w != "AI" else "AI" for w in winners])
-    else:
-        winners_text = "None yet"
-    rows.append(f"- Last round winners: {winners_text}")
-    rows.append("")
     rows.append("### Stats Badges")
     rows.append(
         " ".join(
@@ -251,6 +239,28 @@ def render_section(state: dict, repo: str) -> str:
             )
         rows.append("")
 
+    rows.append("|   | 1 | 2 | 3 |")
+    rows.append("|---|---|---|---|")
+    for r in range(3):
+        line = [str(r + 1)]
+        for c in range(3):
+            line.append(cell_render(state, repo, r, c))
+        rows.append(f"| {' | '.join(line)} |")
+    rows.append("")
+
+    status_text = "Ongoing"
+    turn_text = state["current_turn"] if state["current_turn"] else "X"
+    rows.append(f"- Current turn: {turn_text}{' (you)' if turn_text == 'X' else ''}")
+    rows.append(f"- Status: {status_text}")
+    rows.append("- AI: O (minimax)")
+    rows.append(f"- Last result: {state.get('last_result', 'No finished games yet')}")
+    winners = state.get("last_winners", [])
+    if winners:
+        winners_text = ", ".join([f"@{w}" if w != "AI" else "AI" for w in winners])
+    else:
+        winners_text = "None yet"
+    rows.append(f"- Last round winners: {winners_text}")
+    rows.append("")
     rows.append("Game auto-resets after each finished round and always stays playable.")
 
     return "\n".join(rows)
@@ -384,9 +394,18 @@ def process_issue(args: argparse.Namespace) -> int:
     readme_changed = update_readme(readme_path, render_section(state, repo))
     should_commit = state_changed or readme_changed
 
+    issue_user = args.issue_user
+    last_winners = state.get("last_winners", [])
+    credited_win = issue_user in [w for w in last_winners if w != "AI"]
+    stats_summary = user_stats_summary(state, issue_user)
+
     set_output("comment", message)
     set_output("should_close", "true")
     set_output("should_commit", "true" if should_commit else "false")
+    set_output("issue_user", issue_user)
+    set_output("player_stats", stats_summary)
+    set_output("credited_win", "true" if credited_win else "false")
+    set_output("last_result", state.get("last_result", "No finished games yet"))
     return 0
 
 

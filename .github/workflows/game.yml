@@ -8,6 +8,7 @@ permissions:
   actions: write
   contents: write
   issues: write
+  pull-requests: write
 
 jobs:
   process-move:
@@ -39,19 +40,64 @@ jobs:
             --issue-user "$ISSUE_USER" \
             --issue-number "$ISSUE_NUMBER"
 
+      - name: Create pull request for approval
+        if: steps.process.outputs.should_commit == 'true'
+        id: cpr
+        env:
+          COMMIT_AUTHOR: ${{ github.actor }}
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "Update Tic Tac Toe game state"
+          title: "Tic Tac Toe move from issue #${{ github.event.issue.number }}"
+          body: |
+            Auto-generated move update from issue #${{ github.event.issue.number }}.
+
+            This PR updates:
+            - `game_state.json`
+            - `README.md`
+
+            Merge this PR to approve and publish the move.
+
+            Issue Number: ${{ github.event.issue.number }}
+            Issue User: ${{ steps.process.outputs.issue_user }}
+            Last Result: ${{ steps.process.outputs.last_result }}
+            Credited Win: ${{ steps.process.outputs.credited_win }}
+            Player Stats: ${{ steps.process.outputs.player_stats }}
+          branch: "tictactoe/issue-${{ github.event.issue.number }}"
+          delete-branch: true
+          author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+          add-paths: |
+            README.md
+            game_state.json
+
       - name: Comment on issue
         if: always()
         uses: actions/github-script@v7
         env:
           COMMENT_BODY: ${{ steps.process.outputs.comment }}
+          PR_URL: ${{ steps.cpr.outputs.pull-request-url }}
+          PLAYER_STATS: ${{ steps.process.outputs.player_stats }}
+          CREDITED_WIN: ${{ steps.process.outputs.credited_win }}
+          LAST_RESULT: ${{ steps.process.outputs.last_result }}
         with:
           script: |
-            const body = process.env.COMMENT_BODY || 'Processed.';
+            const base = process.env.COMMENT_BODY || 'Processed.';
+            const prUrl = process.env.PR_URL;
+            const stats = process.env.PLAYER_STATS || 'moves=0, games=0, win_contributions=0';
+            const credited = process.env.CREDITED_WIN === 'true';
+            const lastResult = process.env.LAST_RESULT || 'No finished games yet';
+            const approvalNote = prUrl
+              ? `\n\nA PR was created for your approval: ${prUrl}\nMerge it to apply the move.`
+              : '\n\nNo PR was created (invalid move or no state change).';
+            const statsNote = `\n\nCurrent player stats: ${stats}`;
+            const creditNote = credited
+              ? `\nYou were credited with a win contribution in this round. Last result: ${lastResult}`
+              : '';
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body
+              body: `${base}${approvalNote}${statsNote}${creditNote}`
             });
 
       - name: Close issue
@@ -65,16 +111,3 @@ jobs:
               issue_number: context.issue.number,
               state: 'closed'
             });
-
-      - name: Commit and push changes
-        if: steps.process.outputs.should_commit == 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md game_state.json
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-            exit 0
-          fi
-          git commit -m "Update Tic Tac Toe game state"
-          git push

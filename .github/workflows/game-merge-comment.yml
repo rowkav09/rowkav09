@@ -1,0 +1,53 @@
+name: Tic Tac Toe Merge Follow-Up
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  issues: write
+  pull-requests: read
+
+jobs:
+  follow-up:
+    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'tictactoe/issue-')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment merge result on source issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || '';
+
+            const issueMatch = body.match(/Issue Number:\s*(\d+)/i);
+            const userMatch = body.match(/Issue User:\s*(\S+)/i);
+            const resultMatch = body.match(/Last Result:\s*(.+)/i);
+            const creditedMatch = body.match(/Credited Win:\s*(true|false)/i);
+            const statsMatch = body.match(/Player Stats:\s*(.+)/i);
+
+            if (!issueMatch) {
+              core.info('No source issue number found in PR body; skipping comment.');
+              return;
+            }
+
+            const issueNumber = Number(issueMatch[1]);
+            const issueUser = userMatch ? userMatch[1] : 'player';
+            const lastResult = resultMatch ? resultMatch[1].trim() : 'No finished games yet';
+            const credited = creditedMatch ? creditedMatch[1].toLowerCase() === 'true' : false;
+            const stats = statsMatch ? statsMatch[1].trim() : 'moves=0, games=0, win_contributions=0';
+
+            const lines = [];
+            lines.push('Approved and merged. Your move is now live in the README board.');
+            lines.push(`Player: @${issueUser}`);
+            lines.push(`Stats: ${stats}`);
+            lines.push(`Last result snapshot: ${lastResult}`);
+            if (credited) {
+              lines.push('You were credited with a win contribution for this merged round.');
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: lines.join('\n')
+            });
