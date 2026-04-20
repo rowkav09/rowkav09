@@ -8,12 +8,12 @@
     [
       "",
       "O",
-      ""
+      "O"
     ],
     [
       "",
       "",
-      ""
+      "X"
     ]
   ],
   "current_turn": "X",
@@ -26,13 +26,13 @@
   "ai_wins": 0,
   "draws": 0,
   "total_games": 0,
-  "total_human_moves": 1,
+  "total_human_moves": 2,
   "update_samples": 0,
   "total_update_seconds": 0,
   "avg_update_seconds": 0,
   "player_stats": {
     "rowkav09": {
-      "moves_placed": 1,
+      "moves_placed": 2,
       "games_played": 0,
       "wins_contributed": 0,
       "human_wins": 0,
@@ -40,6 +40,7 @@
     }
   },
   "current_game_contributors": [
+    "rowkav09",
     "rowkav09"
   ],
   "users_moved": [
