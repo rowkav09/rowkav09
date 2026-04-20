@@ -128,7 +128,9 @@ jobs:
             const lastResult = process.env.LAST_RESULT || 'No finished games yet';
             const humanMove = process.env.HUMAN_MOVE || '-';
             const aiMove = process.env.AI_MOVE || '-';
-            const moveMs = process.env.MOVE_PROCESSING_MS || '0';
+            const createdAt = new Date(context.payload.issue.created_at).getTime();
+            const now = Date.now();
+            const actionLatencySec = Math.max(0, Math.round((now - createdAt) / 1000));
             const approvalNote = prUrl && prMerged
               ? `\n\nMove PR ${prUrl} was auto-merged. Your move and AI response are now applied.`
               : prUrl
@@ -137,9 +139,10 @@ jobs:
             const nextSteps = prUrl && prMerged
               ? '\n\nNext steps:\n1) The merge follow-up workflow will comment with final timing and credited stats.\n2) Typical end-to-end update time: under 1 minute.'
               : '\n\nNext steps:\n1) Merge the PR if auto-merge was blocked.\n2) After merge, this issue gets a follow-up with credited stats and timing.\n3) Typical end-to-end update time: 1-3 minutes.';
-            const statsNote = `\n\nCurrent player stats: ${stats}`;
-            const badgesNote = statsBadges ? `\n${statsBadges}` : '';
-            const moveNote = `\n\nYour move: ${humanMove}\nAI move: ${aiMove}\nMove compute time: ${moveMs}ms`;
+            const badgesNote = statsBadges
+              ? `\n\nCurrent player stats:\n${statsBadges}`
+              : `\n\nCurrent player stats: ${stats}`;
+            const moveNote = `\n\nYour move: ${humanMove}\nAI move: ${aiMove}\nAction latency: ${actionLatencySec}s`;
             const creditOwnerNote = '\n\nAuthorship credit: game update commits are authored as @${{ github.repository_owner }}.';
             const mergeNoteText = mergeNote ? `\n\nMerge status: ${mergeNote}` : '';
             const creditNote = credited
@@ -149,7 +152,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `${base}${approvalNote}${mergeNoteText}${nextSteps}${moveNote}${statsNote}${badgesNote}${creditOwnerNote}${creditNote}`
+              body: `${base}${approvalNote}${mergeNoteText}${nextSteps}${moveNote}${badgesNote}${creditOwnerNote}${creditNote}`
             });
 
       - name: Fallback comment on issue
