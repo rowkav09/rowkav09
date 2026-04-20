@@ -14,13 +14,20 @@ Play by clicking a cell button below. Each click opens a pre-filled issue that t
 Legend: ❌ = You, ⭕ = AI, ◻️ = Available
 
 ### Stats Badges
-![Human Wins: 0](https://img.shields.io/badge/Human%20Wins-0-2ea44f?style=plastic) ![AI Wins: 0](https://img.shields.io/badge/AI%20Wins-0-d73a49?style=plastic) ![Draws: 0](https://img.shields.io/badge/Draws-0-6f42c1?style=plastic) ![Games Played: 0](https://img.shields.io/badge/Games%20Played-0-0366d6?style=plastic) ![Human Moves: 3](https://img.shields.io/badge/Human%20Moves-3-0e8a16?style=plastic) ![Avg Update: 0s](https://img.shields.io/badge/Avg%20Update-0s-fb8500?style=plastic)
+![Human Wins: 0](https://img.shields.io/badge/Human%20Wins-0-2ea44f?style=plastic) ![AI Wins: 0](https://img.shields.io/badge/AI%20Wins-0-d73a49?style=plastic) ![Draws: 0](https://img.shields.io/badge/Draws-0-6f42c1?style=plastic) ![Games Played: 0](https://img.shields.io/badge/Games%20Played-0-0366d6?style=plastic) ![Human Moves: 4](https://img.shields.io/badge/Human%20Moves-4-0e8a16?style=plastic) ![Avg Update: 0s](https://img.shields.io/badge/Avg%20Update-0s-fb8500?style=plastic)
 
+<<<<<<< HEAD
+=======
+### Contributor Badges
+- @rowkav09 ![Moves: 3](https://img.shields.io/badge/Moves-3-1f6feb?style=plastic) ![Games: 0](https://img.shields.io/badge/Games-0-8250df?style=plastic) ![Win Contributions: 0](https://img.shields.io/badge/Win%20Contributions-0-2ea44f?style=plastic)
+- @MH-787b ![Moves: 1](https://img.shields.io/badge/Moves-1-1f6feb?style=plastic) ![Games: 0](https://img.shields.io/badge/Games-0-8250df?style=plastic) ![Win Contributions: 0](https://img.shields.io/badge/Win%20Contributions-0-2ea44f?style=plastic)
+
+>>>>>>> 9a628f13ca99de14c55f63ad7bd97104a9387af5
 |   | 1 | 2 | 3 |
 |---|---|---|---|
 | 1 | ⭕ | [◻️](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A1%2C2&labels=tic-tac-toe%2Cmove&template=move.yml&body=Thanks+for+playing+Tic+Tac+Toe.%0A%0AWhat+happens+next%3A%0A1.+Submit+this+issue+with+title+format+move%3AROW%2CCOL.%0A2.+The+action+validates+your+move%2C+applies+the+AI+response%2C+and+opens+a+PR.%0A3.+Repo+owner+merges+that+PR+to+publish+the+update.%0A4.+After+merge%2C+you+get+a+follow-up+comment+with+credited+stats+and+timing.%0A%0ATypical+update+time+after+issue+creation%3A+1-3+minutes+%28depends+on+approval+speed%29.) | ❌ |
 | 2 | ❌ | ⭕ | ⭕ |
-| 3 | [◻️](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A3%2C1&labels=tic-tac-toe%2Cmove&template=move.yml&body=Thanks+for+playing+Tic+Tac+Toe.%0A%0AWhat+happens+next%3A%0A1.+Submit+this+issue+with+title+format+move%3AROW%2CCOL.%0A2.+The+action+validates+your+move%2C+applies+the+AI+response%2C+and+opens+a+PR.%0A3.+Repo+owner+merges+that+PR+to+publish+the+update.%0A4.+After+merge%2C+you+get+a+follow-up+comment+with+credited+stats+and+timing.%0A%0ATypical+update+time+after+issue+creation%3A+1-3+minutes+%28depends+on+approval+speed%29.) | [◻️](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A3%2C2&labels=tic-tac-toe%2Cmove&template=move.yml&body=Thanks+for+playing+Tic+Tac+Toe.%0A%0AWhat+happens+next%3A%0A1.+Submit+this+issue+with+title+format+move%3AROW%2CCOL.%0A2.+The+action+validates+your+move%2C+applies+the+AI+response%2C+and+opens+a+PR.%0A3.+Repo+owner+merges+that+PR+to+publish+the+update.%0A4.+After+merge%2C+you+get+a+follow-up+comment+with+credited+stats+and+timing.%0A%0ATypical+update+time+after+issue+creation%3A+1-3+minutes+%28depends+on+approval+speed%29.) | ❌ |
+| 3 | ❌ | ⭕ | ❌ |
 
 - Current turn: X (you)
 - Status: Ongoing
