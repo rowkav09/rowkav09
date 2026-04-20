@@ -13,12 +13,15 @@
 Play by clicking a cell button below. Each click opens a pre-filled issue that the action processes.
 
 ### Stats Badges
-![Human Wins: 0](https://img.shields.io/badge/Human%20Wins-0-2ea44f?style=plastic) ![AI Wins: 0](https://img.shields.io/badge/AI%20Wins-0-d73a49?style=plastic) ![Draws: 0](https://img.shields.io/badge/Draws-0-6f42c1?style=plastic) ![Games Played: 0](https://img.shields.io/badge/Games%20Played-0-0366d6?style=plastic) ![Human Moves: 0](https://img.shields.io/badge/Human%20Moves-0-0e8a16?style=plastic)
+![Human Wins: 0](https://img.shields.io/badge/Human%20Wins-0-2ea44f?style=plastic) ![AI Wins: 0](https://img.shields.io/badge/AI%20Wins-0-d73a49?style=plastic) ![Draws: 0](https://img.shields.io/badge/Draws-0-6f42c1?style=plastic) ![Games Played: 0](https://img.shields.io/badge/Games%20Played-0-0366d6?style=plastic) ![Human Moves: 1](https://img.shields.io/badge/Human%20Moves-1-0e8a16?style=plastic)
+
+### Contributor Badges
+- @rowkav09 ![Moves: 1](https://img.shields.io/badge/Moves-1-1f6feb?style=plastic) ![Games: 0](https://img.shields.io/badge/Games-0-8250df?style=plastic) ![Win Contributions: 0](https://img.shields.io/badge/Win%20Contributions-0-2ea44f?style=plastic)
 
 |   | 1 | 2 | 3 |
 |---|---|---|---|
-| 1 | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A1%2C1&labels=tic-tac-toe%2Cmove) | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A1%2C2&labels=tic-tac-toe%2Cmove) | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A1%2C3&labels=tic-tac-toe%2Cmove) |
-| 2 | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A2%2C1&labels=tic-tac-toe%2Cmove) | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A2%2C2&labels=tic-tac-toe%2Cmove) | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A2%2C3&labels=tic-tac-toe%2Cmove) |
+| 1 | O | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A1%2C2&labels=tic-tac-toe%2Cmove) | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A1%2C3&labels=tic-tac-toe%2Cmove) |
+| 2 | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A2%2C1&labels=tic-tac-toe%2Cmove) | X | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A2%2C3&labels=tic-tac-toe%2Cmove) |
 | 3 | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A3%2C1&labels=tic-tac-toe%2Cmove) | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A3%2C2&labels=tic-tac-toe%2Cmove) | [⬜](https://github.com/rowkav09/rowkav09/issues/new?title=move%3A3%2C3&labels=tic-tac-toe%2Cmove) |
 
 - Current turn: X (you)
