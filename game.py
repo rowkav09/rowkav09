@@ -25,6 +25,9 @@ def default_state() -> dict:
         "draws": 0,
         "total_games": 0,
         "total_human_moves": 0,
+        "update_samples": 0,
+        "total_update_seconds": 0,
+        "avg_update_seconds": 0,
         "player_stats": {},
         "current_game_contributors": [],
         "users_moved": [],
@@ -149,8 +152,23 @@ def parse_action(issue_title: str, issue_body: str) -> Tuple[str, Optional[Tuple
     return "invalid", None
 
 
-def issue_url(repo: str, title: str, labels: str) -> str:
-    return f"https://github.com/{repo}/issues/new?{urlencode({'title': title, 'labels': labels})}"
+def issue_url(repo: str, title: str, labels: str, body: str = "") -> str:
+    params = {"title": title, "labels": labels, "template": "move.yml"}
+    if body:
+        params["body"] = body
+    return f"https://github.com/{repo}/issues/new?{urlencode(params)}"
+
+
+def default_move_issue_body() -> str:
+    return (
+        "Thanks for playing Tic Tac Toe.\n\n"
+        "What happens next:\n"
+        "1. Submit this issue with title format move:ROW,COL.\n"
+        "2. The action validates your move and opens a PR.\n"
+        "3. Repo owner merges that PR to approve and publish your move.\n"
+        "4. You get a follow-up comment with your credited stats.\n\n"
+        "Typical update time after issue creation: 1-3 minutes (depends on approval speed)."
+    )
 
 
 def badge(label: str, value: str, color: str) -> str:
@@ -188,7 +206,7 @@ def cell_render(state: dict, repo: str, r: int, c: int) -> str:
     if cell == "O":
         return "O"
     if state["game_status"] == "ongoing" and state["current_turn"] == "X":
-        link = issue_url(repo, f"move:{r + 1},{c + 1}", "tic-tac-toe,move")
+        link = issue_url(repo, f"move:{r + 1},{c + 1}", "tic-tac-toe,move", default_move_issue_body())
         return f"[⬜]({link})"
     return "⬜"
 
@@ -209,6 +227,7 @@ def render_section(state: dict, repo: str) -> str:
                 badge("Draws", state.get("draws", 0), "6f42c1"),
                 badge("Games Played", state.get("total_games", 0), "0366d6"),
                 badge("Human Moves", state.get("total_human_moves", 0), "0e8a16"),
+                badge("Avg Update", f"{state.get('avg_update_seconds', 0)}s", "fb8500"),
             ]
         )
     )
@@ -417,6 +436,24 @@ def initialize(args: argparse.Namespace) -> int:
     return 0
 
 
+def record_update_time(args: argparse.Namespace) -> int:
+    state = load_state(args.state)
+    elapsed = max(0, int(args.seconds))
+
+    state["update_samples"] = state.get("update_samples", 0) + 1
+    state["total_update_seconds"] = state.get("total_update_seconds", 0) + elapsed
+    samples = state.get("update_samples", 0)
+    total = state.get("total_update_seconds", 0)
+    state["avg_update_seconds"] = int(round(total / samples)) if samples else 0
+
+    save_state(args.state, state)
+    update_readme(args.readme, render_section(state, args.repo))
+
+    set_output("avg_update_seconds", str(state["avg_update_seconds"]))
+    set_output("update_samples", str(state["update_samples"]))
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Tic Tac Toe README game backend")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -435,6 +472,10 @@ def main() -> int:
     p_process.add_argument("--issue-user", default="unknown")
     p_process.add_argument("--issue-number", default="0")
     p_process.set_defaults(func=process_issue)
+
+    p_record = subparsers.add_parser("record-update-time", parents=[common])
+    p_record.add_argument("--seconds", required=True)
+    p_record.set_defaults(func=record_update_time)
 
     args = parser.parse_args()
     return args.func(args)

@@ -15,6 +15,9 @@
   "draws": 0,
   "total_games": 0,
   "total_human_moves": 0,
+  "update_samples": 0,
+  "total_update_seconds": 0,
+  "avg_update_seconds": 0,
   "player_stats": {},
   "current_game_contributors": [],
   "users_moved": []

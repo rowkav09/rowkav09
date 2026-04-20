@@ -5,6 +5,7 @@ on:
     types: [closed]
 
 permissions:
+  contents: write
   issues: write
   pull-requests: read
 
@@ -13,7 +14,8 @@ jobs:
     if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'tictactoe/issue-')
     runs-on: ubuntu-latest
     steps:
-      - name: Comment merge result on source issue
+      - name: Extract issue metadata
+        id: meta
         uses: actions/github-script@v7
         with:
           script: |
@@ -26,7 +28,7 @@ jobs:
             const statsMatch = body.match(/Player Stats:\s*(.+)/i);
 
             if (!issueMatch) {
-              core.info('No source issue number found in PR body; skipping comment.');
+              core.setOutput('skip', 'true');
               return;
             }
 
@@ -36,11 +38,86 @@ jobs:
             const credited = creditedMatch ? creditedMatch[1].toLowerCase() === 'true' : false;
             const stats = statsMatch ? statsMatch[1].trim() : 'moves=0, games=0, win_contributions=0';
 
+            const issueResp = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+            });
+
+            const createdAt = new Date(issueResp.data.created_at).getTime();
+            const mergedAt = new Date(context.payload.pull_request.merged_at).getTime();
+            const elapsedSeconds = Math.max(0, Math.round((mergedAt - createdAt) / 1000));
+
+            core.setOutput('skip', 'false');
+            core.setOutput('issue_number', String(issueNumber));
+            core.setOutput('issue_user', issueUser);
+            core.setOutput('last_result', lastResult);
+            core.setOutput('credited_win', credited ? 'true' : 'false');
+            core.setOutput('player_stats', stats);
+            core.setOutput('elapsed_seconds', String(elapsedSeconds));
+
+      - name: Checkout
+        if: steps.meta.outputs.skip != 'true'
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        if: steps.meta.outputs.skip != 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Record update time metric
+        if: steps.meta.outputs.skip != 'true'
+        id: metrics
+        env:
+          REPO: ${{ github.repository }}
+          ELAPSED_SECONDS: ${{ steps.meta.outputs.elapsed_seconds }}
+        run: |
+          python game.py record-update-time \
+            --repo "$REPO" \
+            --seconds "$ELAPSED_SECONDS"
+
+      - name: Commit metric updates
+        if: steps.meta.outputs.skip != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md game_state.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Update Tic Tac Toe average update time"
+          git push
+
+      - name: Comment merge result on source issue
+        if: steps.meta.outputs.skip != 'true'
+        uses: actions/github-script@v7
+        env:
+          ISSUE_NUMBER: ${{ steps.meta.outputs.issue_number }}
+          ISSUE_USER: ${{ steps.meta.outputs.issue_user }}
+          LAST_RESULT: ${{ steps.meta.outputs.last_result }}
+          CREDITED_WIN: ${{ steps.meta.outputs.credited_win }}
+          PLAYER_STATS: ${{ steps.meta.outputs.player_stats }}
+          ELAPSED_SECONDS: ${{ steps.meta.outputs.elapsed_seconds }}
+          AVG_UPDATE_SECONDS: ${{ steps.metrics.outputs.avg_update_seconds }}
+        with:
+          script: |
+            const issueNumber = Number(process.env.ISSUE_NUMBER);
+            const issueUser = process.env.ISSUE_USER || 'player';
+            const lastResult = process.env.LAST_RESULT || 'No finished games yet';
+            const credited = process.env.CREDITED_WIN === 'true';
+            const stats = process.env.PLAYER_STATS || 'moves=0, games=0, win_contributions=0';
+            const elapsed = process.env.ELAPSED_SECONDS || '0';
+            const avg = process.env.AVG_UPDATE_SECONDS || elapsed;
+
             const lines = [];
             lines.push('Approved and merged. Your move is now live in the README board.');
             lines.push(`Player: @${issueUser}`);
             lines.push(`Stats: ${stats}`);
             lines.push(`Last result snapshot: ${lastResult}`);
+            lines.push(`Update time this move: ${elapsed}s`);
+            lines.push(`Average update time: ${avg}s`);
             if (credited) {
               lines.push('You were credited with a win contribution for this merged round.');
             }
