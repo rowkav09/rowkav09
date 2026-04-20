@@ -2,11 +2,11 @@
   "board": [
     [
       "",
-      "",
+      "X",
       "O"
     ],
     [
-      "",
+      "O",
       "",
       "X"
     ],
@@ -26,16 +26,16 @@
   "ai_wins": 0,
   "draws": 1,
   "total_games": 1,
-  "total_human_moves": 6,
-  "total_ai_moves": 5,
-  "update_samples": 1,
-  "total_update_ms": 258,
-  "avg_update_ms": 258,
+  "total_human_moves": 7,
+  "total_ai_moves": 6,
+  "update_samples": 2,
+  "total_update_ms": 265,
+  "avg_update_ms": 132,
   "total_update_seconds": 0,
   "avg_update_seconds": 0,
   "player_stats": {
     "rowkav09": {
-      "moves_placed": 5,
+      "moves_placed": 6,
       "games_played": 1,
       "wins_contributed": 0,
       "human_wins": 0,
@@ -50,6 +50,7 @@
     }
   },
   "current_game_contributors": [
+    "rowkav09",
     "rowkav09"
   ],
   "users_moved": []
