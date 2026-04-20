@@ -1,59 +1,58 @@
 {
   "board": [
     [
-      "O",
       "",
-      "X"
+      "",
+      ""
     ],
     [
-      "X",
-      "O",
-      "O"
+      "",
+      "",
+      ""
     ],
     [
-      "X",
-      "O",
-      "X"
+      "",
+      "",
+      ""
     ]
   ],
   "current_turn": "X",
   "game_status": "ongoing",
   "winner": null,
   "last_winner": null,
-  "last_result": "No finished games yet",
+  "last_result": "Draw",
   "last_winners": [],
   "human_wins": 0,
   "ai_wins": 0,
+<<<<<<< HEAD
   "draws": 0,
   "total_games": 0,
   "total_human_moves": 4,
   "total_ai_moves": 4,
+=======
+  "draws": 1,
+  "total_games": 1,
+  "total_human_moves": 5,
+>>>>>>> f6041a1de2ad3bf758567fc25df8ea2e4ec78a2b
   "update_samples": 0,
   "total_update_seconds": 0,
   "avg_update_seconds": 0,
   "player_stats": {
     "rowkav09": {
-      "moves_placed": 3,
-      "games_played": 0,
+      "moves_placed": 4,
+      "games_played": 1,
       "wins_contributed": 0,
       "human_wins": 0,
-      "draws": 0
+      "draws": 1
     },
     "MH-787b": {
       "moves_placed": 1,
-      "games_played": 0,
+      "games_played": 1,
       "wins_contributed": 0,
       "human_wins": 0,
-      "draws": 0
+      "draws": 1
     }
   },
-  "current_game_contributors": [
-    "rowkav09",
-    "rowkav09",
-    "MH-787b",
-    "rowkav09"
-  ],
-  "users_moved": [
-    "rowkav09"
-  ]
+  "current_game_contributors": [],
+  "users_moved": []
 }
