@@ -1,0 +1,21 @@
+{
+  "board": [
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""]
+  ],
+  "current_turn": "X",
+  "game_status": "ongoing",
+  "winner": null,
+  "last_winner": null,
+  "last_result": "No finished games yet",
+  "last_winners": [],
+  "human_wins": 0,
+  "ai_wins": 0,
+  "draws": 0,
+  "total_games": 0,
+  "total_human_moves": 0,
+  "player_stats": {},
+  "current_game_contributors": [],
+  "users_moved": []
+}

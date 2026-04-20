@@ -1,0 +1,28 @@
+name: Tic Tac Toe Move
+description: Submit a move for the README Tic Tac Toe game
+title: "move:"
+labels:
+  - tic-tac-toe
+  - move
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Enter your move as `row,column` using values 1-3.
+        Example: `2,3`
+        The game auto-resets after each finished round.
+  - type: input
+    id: move
+    attributes:
+      label: Move
+      description: Format must be row,column using 1-3
+      placeholder: "1,1"
+    validations:
+      required: true
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Rules
+      options:
+        - label: I confirm my move is in row,column format and values are between 1 and 3.
+          required: true
