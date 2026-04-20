@@ -1,8 +1,20 @@
 {
   "board": [
-    ["", "", ""],
-    ["", "", ""],
-    ["", "", ""]
+    [
+      "O",
+      "",
+      ""
+    ],
+    [
+      "",
+      "X",
+      ""
+    ],
+    [
+      "",
+      "",
+      ""
+    ]
   ],
   "current_turn": "X",
   "game_status": "ongoing",
@@ -14,8 +26,20 @@
   "ai_wins": 0,
   "draws": 0,
   "total_games": 0,
-  "total_human_moves": 0,
-  "player_stats": {},
-  "current_game_contributors": [],
-  "users_moved": []
+  "total_human_moves": 1,
+  "player_stats": {
+    "rowkav09": {
+      "moves_placed": 1,
+      "games_played": 0,
+      "wins_contributed": 0,
+      "human_wins": 0,
+      "draws": 0
+    }
+  },
+  "current_game_contributors": [
+    "rowkav09"
+  ],
+  "users_moved": [
+    "rowkav09"
+  ]
 }
