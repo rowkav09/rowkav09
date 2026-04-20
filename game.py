@@ -164,9 +164,10 @@ def default_move_issue_body() -> str:
         "Thanks for playing Tic Tac Toe.\n\n"
         "What happens next:\n"
         "1. Submit this issue with title format move:ROW,COL.\n"
-        "2. The action validates your move and opens a PR.\n"
-        "3. Repo owner merges that PR to approve and publish your move.\n"
-        "4. You get a follow-up comment with your credited stats.\n\n"
+        "2. The action validates your move, applies the AI response, and opens a PR.\n"
+        "3. The workflow auto-merges that PR to publish the update.\n"
+        "4. If auto-merge is blocked by branch protection, merge the PR manually.\n"
+        "5. You get a follow-up comment with your credited stats.\n\n"
         "Typical update time after issue creation: 1-3 minutes (depends on approval speed)."
     )
 
