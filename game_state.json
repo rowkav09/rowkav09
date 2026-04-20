@@ -24,17 +24,13 @@
   "last_winners": [],
   "human_wins": 0,
   "ai_wins": 0,
-<<<<<<< HEAD
-  "draws": 0,
-  "total_games": 0,
-  "total_human_moves": 4,
-  "total_ai_moves": 4,
-=======
   "draws": 1,
   "total_games": 1,
   "total_human_moves": 5,
->>>>>>> f6041a1de2ad3bf758567fc25df8ea2e4ec78a2b
+  "total_ai_moves": 4,
   "update_samples": 0,
+  "total_update_ms": 0,
+  "avg_update_ms": 0,
   "total_update_seconds": 0,
   "avg_update_seconds": 0,
   "player_stats": {

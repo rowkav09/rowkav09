@@ -29,6 +29,8 @@ def default_state() -> dict:
         "total_human_moves": 0,
         "total_ai_moves": 0,
         "update_samples": 0,
+        "total_update_ms": 0,
+        "avg_update_ms": 0,
         "total_update_seconds": 0,
         "avg_update_seconds": 0,
         "player_stats": {},
@@ -180,6 +182,16 @@ def badge(label: str, value: str, color: str) -> str:
     return f"![{label}: {value}](https://img.shields.io/badge/{label_enc}-{value_enc}-{color}?style=plastic)"
 
 
+def format_duration_ms(duration_ms: int) -> str:
+    duration_ms = max(0, int(duration_ms))
+    if duration_ms < 1000:
+        return f"{duration_ms}ms"
+    seconds = duration_ms / 1000
+    if seconds >= 10:
+        return f"{seconds:.1f}s"
+    return f"{seconds:.2f}s"
+
+
 def ensure_player_stats(state: dict, username: str) -> dict:
     stats = state.setdefault("player_stats", {})
     if username not in stats:
@@ -229,17 +241,22 @@ def render_section(state: dict, repo: str) -> str:
     rows.append("Legend: ❌ = You, ⭕ = AI, ◻️ = Available")
     rows.append("")
 
+    avg_update_ms = state.get("avg_update_ms")
+    if avg_update_ms is None:
+        avg_update_ms = int(state.get("avg_update_seconds", 0)) * 1000
+    avg_update_text = format_duration_ms(avg_update_ms)
+
     rows.append("### Stats Badges")
     rows.append(
         " ".join(
             [
-                badge("H", state.get("human_wins", 0), "2ea44f"),
-                badge("A", state.get("ai_wins", 0), "d73a49"),
-                badge("D", state.get("draws", 0), "6f42c1"),
-                badge("G", state.get("total_games", 0), "0366d6"),
-                badge("X", state.get("total_human_moves", 0), "0e8a16"),
-                badge("O", state.get("total_ai_moves", 0), "b60205"),
-                badge("U", f"{state.get('avg_update_seconds', 0)}s", "fb8500"),
+                badge("Human Wins", state.get("human_wins", 0), "2ea44f"),
+                badge("AI Wins", state.get("ai_wins", 0), "d73a49"),
+                badge("Draws", state.get("draws", 0), "6f42c1"),
+                badge("Games Played", state.get("total_games", 0), "0366d6"),
+                badge("Human Moves", state.get("total_human_moves", 0), "0e8a16"),
+                badge("AI Moves", state.get("total_ai_moves", 0), "b60205"),
+                badge("Average Action Time", avg_update_text, "fb8500"),
             ]
         )
     )
@@ -292,17 +309,23 @@ def render_section(state: dict, repo: str) -> str:
 
     if leaderboard:
         rows.append("### Leaderboard")
+        rows.append("| Rank | Player | Type | Moves | Games | Wins |")
+        rows.append("|---:|---|---|---:|---:|---:|")
         sorted_leaderboard = sorted(
             leaderboard,
-            key=lambda item: (item["wins"], item["moves"], item["games"]),
+            key=lambda item: (item["wins"], item["moves"], item["games"], item["name"].lower()),
             reverse=True,
         )
-        for entry in sorted_leaderboard[:10]:
+        for index, entry in enumerate(sorted_leaderboard[:10], start=1):
             if entry["link"]:
                 name_text = f"[@{entry['name']}]({entry['link']})"
+                player_type = "Human"
             else:
                 name_text = entry["name"]
-            rows.append(f"- {name_text} | M:{entry['moves']} G:{entry['games']} W:{entry['wins']}")
+                player_type = "AI"
+            rows.append(
+                f"| {index} | {name_text} | {player_type} | {entry['moves']} | {entry['games']} | {entry['wins']} |"
+            )
         rows.append("")
 
     rows.append("Game auto-resets after each finished round and always stays playable.")
@@ -475,12 +498,14 @@ def process_issue(args: argparse.Namespace) -> int:
         except ValueError:
             action_latency_seconds = None
 
-    if state_changed and action_latency_seconds is not None:
+    if state_changed:
         state["update_samples"] = state.get("update_samples", 0) + 1
-        state["total_update_seconds"] = state.get("total_update_seconds", 0) + action_latency_seconds
+        state["total_update_ms"] = state.get("total_update_ms", 0) + processing_ms
         samples = state.get("update_samples", 0)
-        total = state.get("total_update_seconds", 0)
-        state["avg_update_seconds"] = int(round(total / samples)) if samples else 0
+        total_ms = state.get("total_update_ms", 0)
+        state["avg_update_ms"] = int(round(total_ms / samples)) if samples else 0
+        state["total_update_seconds"] = int(round(total_ms / 1000))
+        state["avg_update_seconds"] = int(round(state["avg_update_ms"] / 1000)) if samples else 0
         save_state(state_path, state)
         readme_changed = update_readme(readme_path, render_section(state, repo))
         should_commit = state_changed or readme_changed
@@ -514,18 +539,21 @@ def initialize(args: argparse.Namespace) -> int:
 
 def record_update_time(args: argparse.Namespace) -> int:
     state = load_state(args.state)
-    elapsed = max(0, int(args.seconds))
+    elapsed_ms = max(0, int(args.seconds)) * 1000
 
     state["update_samples"] = state.get("update_samples", 0) + 1
-    state["total_update_seconds"] = state.get("total_update_seconds", 0) + elapsed
+    state["total_update_ms"] = state.get("total_update_ms", 0) + elapsed_ms
     samples = state.get("update_samples", 0)
-    total = state.get("total_update_seconds", 0)
-    state["avg_update_seconds"] = int(round(total / samples)) if samples else 0
+    total_ms = state.get("total_update_ms", 0)
+    state["avg_update_ms"] = int(round(total_ms / samples)) if samples else 0
+    state["total_update_seconds"] = int(round(total_ms / 1000))
+    state["avg_update_seconds"] = int(round(state["avg_update_ms"] / 1000)) if samples else 0
 
     save_state(args.state, state)
     update_readme(args.readme, render_section(state, args.repo))
 
     set_output("avg_update_seconds", str(state["avg_update_seconds"]))
+    set_output("avg_update_ms", str(state["avg_update_ms"]))
     set_output("update_samples", str(state["update_samples"]))
     return 0
 
