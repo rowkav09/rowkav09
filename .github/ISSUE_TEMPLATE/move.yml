@@ -12,8 +12,8 @@ body:
         1. The board button you clicked already set the title to your selected cell.
         2. Keep the title as `move:ROW,COL` with values `1-3`.
         3. Submit the issue.
-        4. The workflow creates and auto-merges a PR to apply your move (and the AI response).
-        5. If auto-merge is blocked by branch protection, merge the PR manually.
+        4. The workflow creates a PR with your move and AI response.
+        5. You approve by merging that PR yourself.
         6. This issue gets an immediate status comment and a follow-up comment after merge with your latest stats.
         7. The game auto-resets after each finished round.
         8. Typical end-to-end update time is about 1-3 minutes.

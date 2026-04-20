@@ -165,9 +165,8 @@ def default_move_issue_body() -> str:
         "What happens next:\n"
         "1. Submit this issue with title format move:ROW,COL.\n"
         "2. The action validates your move, applies the AI response, and opens a PR.\n"
-        "3. The workflow auto-merges that PR to publish the update.\n"
-        "4. If auto-merge is blocked by branch protection, merge the PR manually.\n"
-        "5. You get a follow-up comment with your credited stats.\n\n"
+        "3. Repo owner merges that PR to publish the update.\n"
+        "4. After merge, you get a follow-up comment with credited stats and timing.\n\n"
         "Typical update time after issue creation: 1-3 minutes (depends on approval speed)."
     )
 
@@ -203,13 +202,13 @@ def user_stats_summary(state: dict, username: str) -> str:
 def cell_render(state: dict, repo: str, r: int, c: int) -> str:
     cell = state["board"][r][c]
     if cell == "X":
-        return "X"
+        return "❌"
     if cell == "O":
-        return "O"
+        return "⭕"
     if state["game_status"] == "ongoing" and state["current_turn"] == "X":
         link = issue_url(repo, f"move:{r + 1},{c + 1}", "tic-tac-toe,move", default_move_issue_body())
-        return f"[⬜]({link})"
-    return "⬜"
+        return f"[◻️]({link})"
+    return "◻️"
 
 
 def render_section(state: dict, repo: str) -> str:
@@ -217,6 +216,7 @@ def render_section(state: dict, repo: str) -> str:
     rows.append("## Tic Tac Toe (Interactive)")
     rows.append("")
     rows.append("Play by clicking a cell button below. Each click opens a pre-filled issue that the action processes.")
+    rows.append("Legend: ❌ = You, ⭕ = AI, ◻️ = Available")
     rows.append("")
 
     rows.append("### Stats Badges")
@@ -364,9 +364,6 @@ def handle_move(state: dict, move: Tuple[int, int], issue_user: str) -> Tuple[di
     if state["current_turn"] != "X":
         return state, "It is not X turn right now. Please try again shortly.", False
 
-    if issue_user in state.get("users_moved", []):
-        return state, "You already made a move in this round. Wait for the next round.", False
-
     if state["board"][r][c] != "":
         return state, "That cell is already occupied. Choose another one.", False
 
@@ -374,7 +371,6 @@ def handle_move(state: dict, move: Tuple[int, int], issue_user: str) -> Tuple[di
     player = ensure_player_stats(state, issue_user)
     player["moves_placed"] = player.get("moves_placed", 0) + 1
     state["total_human_moves"] = state.get("total_human_moves", 0) + 1
-    state.setdefault("users_moved", []).append(issue_user)
     state.setdefault("current_game_contributors", []).append(issue_user)
     evaluate_status(state)
     if state["game_status"] != "ongoing":
