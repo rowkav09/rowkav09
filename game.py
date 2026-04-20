@@ -3,6 +3,7 @@ import json
 import os
 import re
 import time
+from datetime import datetime
 from copy import deepcopy
 from typing import List, Optional, Tuple
 from urllib.parse import quote, urlencode
@@ -26,6 +27,7 @@ def default_state() -> dict:
         "draws": 0,
         "total_games": 0,
         "total_human_moves": 0,
+        "total_ai_moves": 0,
         "update_samples": 0,
         "total_update_seconds": 0,
         "avg_update_seconds": 0,
@@ -231,12 +233,13 @@ def render_section(state: dict, repo: str) -> str:
     rows.append(
         " ".join(
             [
-                badge("Human Wins", state.get("human_wins", 0), "2ea44f"),
-                badge("AI Wins", state.get("ai_wins", 0), "d73a49"),
-                badge("Draws", state.get("draws", 0), "6f42c1"),
-                badge("Games Played", state.get("total_games", 0), "0366d6"),
-                badge("Human Moves", state.get("total_human_moves", 0), "0e8a16"),
-                badge("Avg Update", f"{state.get('avg_update_seconds', 0)}s", "fb8500"),
+                badge("H", state.get("human_wins", 0), "2ea44f"),
+                badge("A", state.get("ai_wins", 0), "d73a49"),
+                badge("D", state.get("draws", 0), "6f42c1"),
+                badge("G", state.get("total_games", 0), "0366d6"),
+                badge("X", state.get("total_human_moves", 0), "0e8a16"),
+                badge("O", state.get("total_ai_moves", 0), "b60205"),
+                badge("U", f"{state.get('avg_update_seconds', 0)}s", "fb8500"),
             ]
         )
     )
@@ -266,21 +269,40 @@ def render_section(state: dict, repo: str) -> str:
     rows.append("")
 
     player_stats = state.get("player_stats", {})
-    if player_stats:
-        rows.append("### Contributors")
-        sorted_players = sorted(
-            player_stats.items(),
-            key=lambda item: (
-                item[1].get("wins_contributed", 0),
-                item[1].get("moves_placed", 0),
-                item[1].get("games_played", 0),
-            ),
+    ai_moves = max(state.get("total_ai_moves", 0), sum(1 for row in state.get("board", []) for cell in row if cell == "O"))
+    leaderboard = [
+        {
+            "name": "AI",
+            "link": None,
+            "moves": ai_moves,
+            "games": state.get("total_games", 0),
+            "wins": state.get("ai_wins", 0),
+        }
+    ]
+    for username, stats in player_stats.items():
+        leaderboard.append(
+            {
+                "name": username,
+                "link": f"https://github.com/{username}",
+                "moves": stats.get("moves_placed", 0),
+                "games": stats.get("games_played", 0),
+                "wins": stats.get("wins_contributed", 0),
+            }
+        )
+
+    if leaderboard:
+        rows.append("### Leaderboard")
+        sorted_leaderboard = sorted(
+            leaderboard,
+            key=lambda item: (item["wins"], item["moves"], item["games"]),
             reverse=True,
         )
-        for username, stats in sorted_players[:8]:
-            rows.append(
-                f"- [@{username}](https://github.com/{username}) | M:{stats.get('moves_placed', 0)} G:{stats.get('games_played', 0)} W:{stats.get('wins_contributed', 0)}"
-            )
+        for entry in sorted_leaderboard[:10]:
+            if entry["link"]:
+                name_text = f"[@{entry['name']}]({entry['link']})"
+            else:
+                name_text = entry["name"]
+            rows.append(f"- {name_text} | M:{entry['moves']} G:{entry['games']} W:{entry['wins']}")
         rows.append("")
 
     rows.append("Game auto-resets after each finished round and always stays playable.")
@@ -389,6 +411,7 @@ def handle_move(state: dict, move: Tuple[int, int], issue_user: str) -> Tuple[di
     ai_r, ai_c = choose_ai_move(state["board"])
     if ai_r >= 0:
         state["board"][ai_r][ai_c] = "O"
+        state["total_ai_moves"] = state.get("total_ai_moves", 0) + 1
         details["ai_move"] = format_move((ai_r, ai_c))
     evaluate_status(state)
     if state["game_status"] == "ongoing":
@@ -443,6 +466,25 @@ def process_issue(args: argparse.Namespace) -> int:
     )
     processing_ms = int(round((time.perf_counter() - start) * 1000))
 
+    action_latency_seconds = None
+    issue_created_at = (args.issue_created_at or "").strip()
+    if issue_created_at:
+        try:
+            created = datetime.fromisoformat(issue_created_at.replace("Z", "+00:00"))
+            action_latency_seconds = max(0, int(round(time.time() - created.timestamp())))
+        except ValueError:
+            action_latency_seconds = None
+
+    if state_changed and action_latency_seconds is not None:
+        state["update_samples"] = state.get("update_samples", 0) + 1
+        state["total_update_seconds"] = state.get("total_update_seconds", 0) + action_latency_seconds
+        samples = state.get("update_samples", 0)
+        total = state.get("total_update_seconds", 0)
+        state["avg_update_seconds"] = int(round(total / samples)) if samples else 0
+        save_state(state_path, state)
+        readme_changed = update_readme(readme_path, render_section(state, repo))
+        should_commit = state_changed or readme_changed
+
     set_output("comment", message)
     set_output("should_close", "true")
     set_output("should_commit", "true" if should_commit else "false")
@@ -457,6 +499,8 @@ def process_issue(args: argparse.Namespace) -> int:
     set_output("human_move", move_details.get("human_move", "-"))
     set_output("ai_move", move_details.get("ai_move", "-"))
     set_output("move_processing_ms", str(processing_ms))
+    if action_latency_seconds is not None:
+        set_output("action_latency_seconds", str(action_latency_seconds))
     return 0
 
 
@@ -503,6 +547,7 @@ def main() -> int:
     p_process.add_argument("--issue-body", default="")
     p_process.add_argument("--issue-user", default="unknown")
     p_process.add_argument("--issue-number", default="0")
+    p_process.add_argument("--issue-created-at", default="")
     p_process.set_defaults(func=process_issue)
 
     p_record = subparsers.add_parser("record-update-time", parents=[common])

@@ -5,7 +5,6 @@ on:
     types: [closed]
 
 permissions:
-  contents: write
   issues: write
   pull-requests: read
 
@@ -56,40 +55,6 @@ jobs:
             core.setOutput('player_stats', stats);
             core.setOutput('elapsed_seconds', String(elapsedSeconds));
 
-      - name: Checkout
-        if: steps.meta.outputs.skip != 'true'
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        if: steps.meta.outputs.skip != 'true'
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Record update time metric
-        if: steps.meta.outputs.skip != 'true'
-        id: metrics
-        env:
-          REPO: ${{ github.repository }}
-          ELAPSED_SECONDS: ${{ steps.meta.outputs.elapsed_seconds }}
-        run: |
-          python game.py record-update-time \
-            --repo "$REPO" \
-            --seconds "$ELAPSED_SECONDS"
-
-      - name: Commit metric updates
-        if: steps.meta.outputs.skip != 'true'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md game_state.json
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-            exit 0
-          fi
-          git commit -m "Update Tic Tac Toe average update time"
-          git push
-
       - name: Comment merge result on source issue
         if: steps.meta.outputs.skip != 'true'
         uses: actions/github-script@v7
@@ -100,7 +65,6 @@ jobs:
           CREDITED_WIN: ${{ steps.meta.outputs.credited_win }}
           PLAYER_STATS: ${{ steps.meta.outputs.player_stats }}
           ELAPSED_SECONDS: ${{ steps.meta.outputs.elapsed_seconds }}
-          AVG_UPDATE_SECONDS: ${{ steps.metrics.outputs.avg_update_seconds }}
         with:
           script: |
             const issueNumber = Number(process.env.ISSUE_NUMBER);
@@ -109,7 +73,6 @@ jobs:
             const credited = process.env.CREDITED_WIN === 'true';
             const stats = process.env.PLAYER_STATS || 'moves=0, games=0, win_contributions=0';
             const elapsed = process.env.ELAPSED_SECONDS || '0';
-            const avg = process.env.AVG_UPDATE_SECONDS || elapsed;
 
             const lines = [];
             lines.push('Approved and merged. Your move is now live in the README board.');
@@ -117,7 +80,6 @@ jobs:
             lines.push(`Stats: ${stats}`);
             lines.push(`Last result snapshot: ${lastResult}`);
             lines.push(`Update time this move: ${elapsed}s`);
-            lines.push(`Average update time: ${avg}s`);
             if (credited) {
               lines.push('You were credited with a win contribution for this merged round.');
             }

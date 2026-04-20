@@ -31,6 +31,7 @@ jobs:
           ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_USER: ${{ github.event.issue.user.login }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_CREATED_AT: ${{ github.event.issue.created_at }}
           REPO: ${{ github.repository }}
         run: |
           python game.py process-issue \
@@ -38,7 +39,8 @@ jobs:
             --issue-title "$ISSUE_TITLE" \
             --issue-body "$ISSUE_BODY" \
             --issue-user "$ISSUE_USER" \
-            --issue-number "$ISSUE_NUMBER"
+            --issue-number "$ISSUE_NUMBER" \
+            --issue-created-at "$ISSUE_CREATED_AT"
 
       - name: Create pull request for approval
         if: steps.process.outputs.should_commit == 'true'

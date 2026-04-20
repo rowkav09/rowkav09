@@ -27,6 +27,7 @@
   "draws": 0,
   "total_games": 0,
   "total_human_moves": 4,
+  "total_ai_moves": 4,
   "update_samples": 0,
   "total_update_seconds": 0,
   "avg_update_seconds": 0,

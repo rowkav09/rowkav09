@@ -14,7 +14,7 @@ Play by clicking a cell button below. Each click opens a pre-filled issue that t
 Legend: ❌ = You, ⭕ = AI, ◻️ = Available
 
 ### Stats Badges
-![Human Wins: 0](https://img.shields.io/badge/Human%20Wins-0-2ea44f?style=plastic) ![AI Wins: 0](https://img.shields.io/badge/AI%20Wins-0-d73a49?style=plastic) ![Draws: 0](https://img.shields.io/badge/Draws-0-6f42c1?style=plastic) ![Games Played: 0](https://img.shields.io/badge/Games%20Played-0-0366d6?style=plastic) ![Human Moves: 4](https://img.shields.io/badge/Human%20Moves-4-0e8a16?style=plastic) ![Avg Update: 0s](https://img.shields.io/badge/Avg%20Update-0s-fb8500?style=plastic)
+![H: 0](https://img.shields.io/badge/H-0-2ea44f?style=plastic) ![A: 0](https://img.shields.io/badge/A-0-d73a49?style=plastic) ![D: 0](https://img.shields.io/badge/D-0-6f42c1?style=plastic) ![G: 0](https://img.shields.io/badge/G-0-0366d6?style=plastic) ![X: 4](https://img.shields.io/badge/X-4-0e8a16?style=plastic) ![O: 4](https://img.shields.io/badge/O-4-b60205?style=plastic) ![U: 0s](https://img.shields.io/badge/U-0s-fb8500?style=plastic)
 
 |   | 1 | 2 | 3 |
 |---|---|---|---|
@@ -28,7 +28,8 @@ Legend: ❌ = You, ⭕ = AI, ◻️ = Available
 - Last result: No finished games yet
 - Last round winners: None yet
 
-### Contributors
+### Leaderboard
+- AI | M:4 G:0 W:0
 - [@rowkav09](https://github.com/rowkav09) | M:3 G:0 W:0
 - [@MH-787b](https://github.com/MH-787b) | M:1 G:0 W:0
 
