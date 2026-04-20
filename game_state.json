@@ -11,8 +11,8 @@
       "O"
     ],
     [
-      "",
-      "",
+      "X",
+      "O",
       "X"
     ]
   ],
@@ -26,13 +26,13 @@
   "ai_wins": 0,
   "draws": 0,
   "total_games": 0,
-  "total_human_moves": 3,
+  "total_human_moves": 4,
   "update_samples": 0,
   "total_update_seconds": 0,
   "avg_update_seconds": 0,
   "player_stats": {
     "rowkav09": {
-      "moves_placed": 2,
+      "moves_placed": 3,
       "games_played": 0,
       "wins_contributed": 0,
       "human_wins": 0,
@@ -49,7 +49,8 @@
   "current_game_contributors": [
     "rowkav09",
     "rowkav09",
-    "MH-787b"
+    "MH-787b",
+    "rowkav09"
   ],
   "users_moved": [
     "rowkav09"
