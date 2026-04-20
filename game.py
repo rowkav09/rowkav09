@@ -242,31 +242,6 @@ def render_section(state: dict, repo: str) -> str:
     )
     rows.append("")
 
-    player_stats = state.get("player_stats", {})
-    if player_stats:
-        rows.append("### Contributor Badges")
-        sorted_players = sorted(
-            player_stats.items(),
-            key=lambda item: (
-                item[1].get("wins_contributed", 0),
-                item[1].get("moves_placed", 0),
-                item[1].get("games_played", 0),
-            ),
-            reverse=True,
-        )
-        for username, stats in sorted_players[:8]:
-            rows.append(
-                " ".join(
-                    [
-                        f"- @{username}",
-                        badge("Moves", stats.get("moves_placed", 0), "1f6feb"),
-                        badge("Games", stats.get("games_played", 0), "8250df"),
-                        badge("Win Contributions", stats.get("wins_contributed", 0), "2ea44f"),
-                    ]
-                )
-            )
-        rows.append("")
-
     rows.append("|   | 1 | 2 | 3 |")
     rows.append("|---|---|---|---|")
     for r in range(3):
@@ -289,6 +264,25 @@ def render_section(state: dict, repo: str) -> str:
         winners_text = "None yet"
     rows.append(f"- Last round winners: {winners_text}")
     rows.append("")
+
+    player_stats = state.get("player_stats", {})
+    if player_stats:
+        rows.append("### Contributors")
+        sorted_players = sorted(
+            player_stats.items(),
+            key=lambda item: (
+                item[1].get("wins_contributed", 0),
+                item[1].get("moves_placed", 0),
+                item[1].get("games_played", 0),
+            ),
+            reverse=True,
+        )
+        for username, stats in sorted_players[:8]:
+            rows.append(
+                f"- [@{username}](https://github.com/{username}) | M:{stats.get('moves_placed', 0)} G:{stats.get('games_played', 0)} W:{stats.get('wins_contributed', 0)}"
+            )
+        rows.append("")
+
     rows.append("Game auto-resets after each finished round and always stays playable.")
 
     return "\n".join(rows)
