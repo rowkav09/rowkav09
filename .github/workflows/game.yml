@@ -108,8 +108,12 @@ jobs:
           COMMENT_BODY: ${{ steps.process.outputs.comment }}
           PR_URL: ${{ steps.cpr.outputs.pull-request-url }}
           PLAYER_STATS: ${{ steps.process.outputs.player_stats }}
+          PLAYER_STATS_BADGES: ${{ steps.process.outputs.player_stats_badges }}
           CREDITED_WIN: ${{ steps.process.outputs.credited_win }}
           LAST_RESULT: ${{ steps.process.outputs.last_result }}
+          HUMAN_MOVE: ${{ steps.process.outputs.human_move }}
+          AI_MOVE: ${{ steps.process.outputs.ai_move }}
+          MOVE_PROCESSING_MS: ${{ steps.process.outputs.move_processing_ms }}
           PR_MERGED: ${{ steps.mergepr.outputs.merged }}
           MERGE_NOTE: ${{ steps.mergepr.outputs.merge_note }}
         with:
@@ -119,8 +123,12 @@ jobs:
             const prMerged = process.env.PR_MERGED === 'true';
             const mergeNote = process.env.MERGE_NOTE || '';
             const stats = process.env.PLAYER_STATS || 'moves=0, games=0, win_contributions=0';
+            const statsBadges = process.env.PLAYER_STATS_BADGES || '';
             const credited = process.env.CREDITED_WIN === 'true';
             const lastResult = process.env.LAST_RESULT || 'No finished games yet';
+            const humanMove = process.env.HUMAN_MOVE || '-';
+            const aiMove = process.env.AI_MOVE || '-';
+            const moveMs = process.env.MOVE_PROCESSING_MS || '0';
             const approvalNote = prUrl && prMerged
               ? `\n\nMove PR ${prUrl} was auto-merged. Your move and AI response are now applied.`
               : prUrl
@@ -130,6 +138,8 @@ jobs:
               ? '\n\nNext steps:\n1) The merge follow-up workflow will comment with final timing and credited stats.\n2) Typical end-to-end update time: under 1 minute.'
               : '\n\nNext steps:\n1) Merge the PR if auto-merge was blocked.\n2) After merge, this issue gets a follow-up with credited stats and timing.\n3) Typical end-to-end update time: 1-3 minutes.';
             const statsNote = `\n\nCurrent player stats: ${stats}`;
+            const badgesNote = statsBadges ? `\n${statsBadges}` : '';
+            const moveNote = `\n\nYour move: ${humanMove}\nAI move: ${aiMove}\nMove compute time: ${moveMs}ms`;
             const creditOwnerNote = '\n\nAuthorship credit: game update commits are authored as @${{ github.repository_owner }}.';
             const mergeNoteText = mergeNote ? `\n\nMerge status: ${mergeNote}` : '';
             const creditNote = credited
@@ -139,7 +149,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `${base}${approvalNote}${mergeNoteText}${nextSteps}${statsNote}${creditOwnerNote}${creditNote}`
+              body: `${base}${approvalNote}${mergeNoteText}${nextSteps}${moveNote}${statsNote}${badgesNote}${creditOwnerNote}${creditNote}`
             });
 
       - name: Fallback comment on issue

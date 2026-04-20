@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 import re
+import time
 from copy import deepcopy
 from typing import List, Optional, Tuple
 from urllib.parse import quote, urlencode
@@ -199,6 +200,13 @@ def user_stats_summary(state: dict, username: str) -> str:
     )
 
 
+def format_move(move: Optional[Tuple[int, int]]) -> str:
+    if not move:
+        return "-"
+    r, c = move
+    return f"{r + 1},{c + 1}"
+
+
 def cell_render(state: dict, repo: str, r: int, c: int) -> str:
     cell = state["board"][r][c]
     if cell == "X":
@@ -358,14 +366,15 @@ def finalize_and_roll_to_next_game(state: dict) -> str:
     return state["last_result"]
 
 
-def handle_move(state: dict, move: Tuple[int, int], issue_user: str) -> Tuple[dict, str, bool]:
+def handle_move(state: dict, move: Tuple[int, int], issue_user: str) -> Tuple[dict, str, bool, dict]:
     r, c = move
+    details = {"human_move": format_move((r, c)), "ai_move": "-"}
 
     if state["current_turn"] != "X":
-        return state, "It is not X turn right now. Please try again shortly.", False
+        return state, "It is not X turn right now. Please try again shortly.", False, details
 
     if state["board"][r][c] != "":
-        return state, "That cell is already occupied. Choose another one.", False
+        return state, "That cell is already occupied. Choose another one.", False, details
 
     state["board"][r][c] = "X"
     player = ensure_player_stats(state, issue_user)
@@ -375,22 +384,34 @@ def handle_move(state: dict, move: Tuple[int, int], issue_user: str) -> Tuple[di
     evaluate_status(state)
     if state["game_status"] != "ongoing":
         result_text = finalize_and_roll_to_next_game(state)
-        return state, f"Move accepted at {r + 1},{c + 1}. Round finished: {result_text}. New round started.", True
+        return (
+            state,
+            f"Move accepted at {r + 1},{c + 1}. Round finished: {result_text}. New round started.",
+            True,
+            details,
+        )
 
     state["current_turn"] = "O"
     ai_r, ai_c = choose_ai_move(state["board"])
     if ai_r >= 0:
         state["board"][ai_r][ai_c] = "O"
+        details["ai_move"] = format_move((ai_r, ai_c))
     evaluate_status(state)
     if state["game_status"] == "ongoing":
         state["current_turn"] = "X"
-        return state, f"Move accepted at {r + 1},{c + 1}. AI played {ai_r + 1},{ai_c + 1}.", True
+        return state, f"Move accepted at {r + 1},{c + 1}. AI played {ai_r + 1},{ai_c + 1}.", True, details
 
     result_text = finalize_and_roll_to_next_game(state)
-    return state, f"Move accepted at {r + 1},{c + 1}. AI played {ai_r + 1},{ai_c + 1}. Round finished: {result_text}. New round started.", True
+    return (
+        state,
+        f"Move accepted at {r + 1},{c + 1}. AI played {ai_r + 1},{ai_c + 1}. Round finished: {result_text}. New round started.",
+        True,
+        details,
+    )
 
 
 def process_issue(args: argparse.Namespace) -> int:
+    start = time.perf_counter()
     state_path = args.state
     readme_path = args.readme
     repo = args.repo
@@ -399,8 +420,9 @@ def process_issue(args: argparse.Namespace) -> int:
     action, move = parse_action(args.issue_title, args.issue_body)
 
     state_changed = False
+    move_details = {"human_move": "-", "ai_move": "-"}
     if action == "move" and move is not None:
-        state, message, state_changed = handle_move(state, move, args.issue_user)
+        state, message, state_changed, move_details = handle_move(state, move, args.issue_user)
     else:
         message = "Invalid issue format. Use title like move:ROW,COL with values 1-3."
 
@@ -414,14 +436,33 @@ def process_issue(args: argparse.Namespace) -> int:
     last_winners = state.get("last_winners", [])
     credited_win = issue_user in [w for w in last_winners if w != "AI"]
     stats_summary = user_stats_summary(state, issue_user)
+    user_stats = state.get("player_stats", {}).get(issue_user, {})
+    stat_moves = int(user_stats.get("moves_placed", 0))
+    stat_games = int(user_stats.get("games_played", 0))
+    stat_win_contrib = int(user_stats.get("wins_contributed", 0))
+    stats_badges = " ".join(
+        [
+            badge("Moves", stat_moves, "1f6feb"),
+            badge("Games", stat_games, "8250df"),
+            badge("Win Contributions", stat_win_contrib, "2ea44f"),
+        ]
+    )
+    processing_ms = int(round((time.perf_counter() - start) * 1000))
 
     set_output("comment", message)
     set_output("should_close", "true")
     set_output("should_commit", "true" if should_commit else "false")
     set_output("issue_user", issue_user)
     set_output("player_stats", stats_summary)
+    set_output("player_stats_badges", stats_badges)
+    set_output("stat_moves", str(stat_moves))
+    set_output("stat_games", str(stat_games))
+    set_output("stat_win_contributions", str(stat_win_contrib))
     set_output("credited_win", "true" if credited_win else "false")
     set_output("last_result", state.get("last_result", "No finished games yet"))
+    set_output("human_move", move_details.get("human_move", "-"))
+    set_output("ai_move", move_details.get("ai_move", "-"))
+    set_output("move_processing_ms", str(processing_ms))
     return 0
 
 
