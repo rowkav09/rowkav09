@@ -2,41 +2,43 @@
   "board": [
     [
       "",
-      "X",
-      "O"
-    ],
-    [
-      "O",
-      "O",
-      "X"
+      "",
+      ""
     ],
     [
       "",
-      "X",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
       ""
     ]
   ],
   "current_turn": "X",
   "game_status": "ongoing",
   "winner": null,
-  "last_winner": null,
-  "last_result": "Draw",
-  "last_winners": [],
+  "last_winner": "O",
+  "last_result": "AI (O) won",
+  "last_winners": [
+    "AI"
+  ],
   "human_wins": 0,
-  "ai_wins": 0,
+  "ai_wins": 1,
   "draws": 1,
-  "total_games": 1,
-  "total_human_moves": 8,
-  "total_ai_moves": 7,
-  "update_samples": 3,
-  "total_update_ms": 266,
-  "avg_update_ms": 89,
+  "total_games": 2,
+  "total_human_moves": 9,
+  "total_ai_moves": 8,
+  "update_samples": 4,
+  "total_update_ms": 267,
+  "avg_update_ms": 67,
   "total_update_seconds": 0,
   "avg_update_seconds": 0,
   "player_stats": {
     "rowkav09": {
       "moves_placed": 7,
-      "games_played": 1,
+      "games_played": 2,
       "wins_contributed": 0,
       "human_wins": 0,
       "draws": 1
@@ -47,12 +49,15 @@
       "wins_contributed": 0,
       "human_wins": 0,
       "draws": 1
+    },
+    "jonesy200": {
+      "moves_placed": 1,
+      "games_played": 1,
+      "wins_contributed": 0,
+      "human_wins": 0,
+      "draws": 0
     }
   },
-  "current_game_contributors": [
-    "rowkav09",
-    "rowkav09",
-    "rowkav09"
-  ],
+  "current_game_contributors": [],
   "users_moved": []
 }
