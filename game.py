@@ -519,7 +519,12 @@ def finalize_and_roll_to_next_game(state: dict, outcome: str) -> str:
 
 def handle_reveal(state: dict, move: Coordinate, issue_user: str, issue_number: str) -> Tuple[dict, str, bool, dict]:
     r, c = move
-    details = {"human_move": format_move((r, c)), "move_result": "-"}
+    details = {
+        "human_move": format_move((r, c)),
+        "move_result": "-",
+        "round_finished": "false",
+        "round_result": "-",
+    }
 
     if state.get("game_status") != "ongoing":
         reset_board_state(state)
@@ -544,6 +549,8 @@ def handle_reveal(state: dict, move: Coordinate, issue_user: str, issue_number: 
         sync_visible_board(state)
         result_text = finalize_and_roll_to_next_game(state, "mine")
         details["move_result"] = "Mine hit"
+        details["round_finished"] = "true"
+        details["round_result"] = result_text
         return (
             state,
             f"Reveal accepted at {r + 1},{c + 1}. You hit a mine. Round finished: {result_text}. New board started.",
@@ -559,6 +566,8 @@ def handle_reveal(state: dict, move: Coordinate, issue_user: str, issue_number: 
     if remaining == 0:
         result_text = finalize_and_roll_to_next_game(state, "cleared")
         details["move_result"] = f"Opened {opened} tile(s) and cleared the board"
+        details["round_finished"] = "true"
+        details["round_result"] = result_text
         return (
             state,
             f"Reveal accepted at {r + 1},{c + 1}. Opened {opened} tile(s). Board cleared. Round finished: {result_text}. New board started.",
@@ -585,7 +594,7 @@ def process_issue(args: argparse.Namespace) -> int:
     action, move = parse_action(args.issue_title, args.issue_body)
 
     state_changed = False
-    move_details = {"human_move": "-", "move_result": "-"}
+    move_details = {"human_move": "-", "move_result": "-", "round_finished": "false", "round_result": "-"}
     if action == "reveal" and move is not None:
         state, message, state_changed, move_details = handle_reveal(state, move, args.issue_user, args.issue_number)
     else:
@@ -612,6 +621,13 @@ def process_issue(args: argparse.Namespace) -> int:
             badge("Board Clears", stat_win_contrib, "2ea44f"),
         ]
     )
+    if move_details.get("round_finished") == "true":
+        message = (
+            f"{message}\n\n"
+            f"Round result: {move_details.get('round_result', state.get('last_result', 'No finished games yet'))}.\n"
+            f"Your current stats: reveals={stat_moves}, games={stat_games}, board_clears={stat_win_contrib}."
+        )
+
     processing_ms = int(round((time.perf_counter() - start) * 1000))
 
     action_latency_seconds = None
