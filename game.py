@@ -648,6 +648,7 @@ def process_issue(args: argparse.Namespace) -> int:
     set_output("last_result", state.get("last_result", "No finished games yet"))
     set_output("human_move", move_details.get("human_move", "-"))
     set_output("move_result", move_details.get("move_result", "-"))
+    set_output("ai_move", move_details.get("move_result", "-"))
     set_output("move_processing_ms", str(processing_ms))
     if action_latency_seconds is not None:
         set_output("action_latency_seconds", str(action_latency_seconds))

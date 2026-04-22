@@ -1,4 +1,4 @@
-name: Minesweeper Merge Follow-Up
+name: Tic Tac Toe Merge Follow-Up
 
 on:
   pull_request:
@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   follow-up:
-    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'minesweeper/issue-')
+    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'tictactoe/issue-')
     runs-on: ubuntu-latest
     steps:
       - name: Extract issue metadata
@@ -35,7 +35,7 @@ jobs:
             const issueUser = userMatch ? userMatch[1] : 'player';
             const lastResult = resultMatch ? resultMatch[1].trim() : 'No finished games yet';
             const credited = creditedMatch ? creditedMatch[1].toLowerCase() === 'true' : false;
-            const stats = statsMatch ? statsMatch[1].trim() : 'reveals=0, games=0, board_clears=0';
+            const stats = statsMatch ? statsMatch[1].trim() : 'moves=0, games=0, win_contributions=0';
 
             const issueResp = await github.rest.issues.get({
               owner: context.repo.owner,
@@ -71,17 +71,17 @@ jobs:
             const issueUser = process.env.ISSUE_USER || 'player';
             const lastResult = process.env.LAST_RESULT || 'No finished games yet';
             const credited = process.env.CREDITED_WIN === 'true';
-            const stats = process.env.PLAYER_STATS || 'reveals=0, games=0, board_clears=0';
+            const stats = process.env.PLAYER_STATS || 'moves=0, games=0, win_contributions=0';
             const elapsed = process.env.ELAPSED_SECONDS || '0';
 
             const lines = [];
-            lines.push('Approved and merged. Your reveal is now live in the README board.');
+            lines.push('Approved and merged. Your move is now live in the README board.');
             lines.push(`Player: @${issueUser}`);
             lines.push(`Stats: ${stats}`);
             lines.push(`Last result snapshot: ${lastResult}`);
-            lines.push(`Update time this reveal: ${elapsed}s`);
+            lines.push(`Update time this move: ${elapsed}s`);
             if (credited) {
-              lines.push('You were credited with a board clear for this merged round.');
+              lines.push('You were credited with a win contribution for this merged round.');
             }
 
             await github.rest.issues.createComment({
