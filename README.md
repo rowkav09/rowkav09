@@ -14,7 +14,7 @@ Click a hidden tile image below to open a pre-filled issue that reveals that til
 The first reveal is guaranteed safe, and each finished round auto-resets to a fresh board.
 
 ### Stats Badges
-![Boards Cleared: 0](https://img.shields.io/badge/Boards%20Cleared-0-2ea44f?style=plastic) ![Mine Hits: 1](https://img.shields.io/badge/Mine%20Hits-1-d73a49?style=plastic) ![Boards Played: 3](https://img.shields.io/badge/Boards%20Played-3-6f42c1?style=plastic) ![Reveal Actions: 14](https://img.shields.io/badge/Reveal%20Actions-14-0366d6?style=plastic) ![Mines Per Board: 5](https://img.shields.io/badge/Mines%20Per%20Board-5-b60205?style=plastic) ![Average Action Time: 56ms](https://img.shields.io/badge/Average%20Action%20Time-56ms-fb8500?style=plastic)
+![Boards Cleared: 1](https://img.shields.io/badge/Boards%20Cleared-1-2ea44f?style=plastic) ![Mine Hits: 1](https://img.shields.io/badge/Mine%20Hits-1-d73a49?style=plastic) ![Boards Played: 4](https://img.shields.io/badge/Boards%20Played-4-6f42c1?style=plastic) ![Reveal Actions: 15](https://img.shields.io/badge/Reveal%20Actions-15-0366d6?style=plastic) ![Mines Per Board: 5](https://img.shields.io/badge/Mines%20Per%20Board-5-b60205?style=plastic) ![Average Action Time: 51ms](https://img.shields.io/badge/Average%20Action%20Time-51ms-fb8500?style=plastic)
 
 ### Board
 |   | 1 | 2 | 3 | 4 | 5 |
@@ -28,13 +28,13 @@ The first reveal is guaranteed safe, and each finished round auto-resets to a fr
 - Status: Ongoing
 - Safe tiles left this round: 20
 - Reveal progress: 0/20 safe tiles opened
-- Last result: New Minesweeper board ready
-- Last round winners: None yet
+- Last result: Board cleared
+- Last round winners: @rowkav09
 
 ### Leaderboard
 | Rank | Player | Reveal Actions | Games | Board Clears |
 |---:|---|---:|---:|---:|
-| 1 | [@rowkav09](https://github.com/rowkav09) | 12 | 3 | 0 |
+| 1 | [@rowkav09](https://github.com/rowkav09) | 13 | 4 | 1 |
 | 2 | [@MH-787b](https://github.com/MH-787b) | 1 | 1 | 0 |
 | 3 | [@jonesy200](https://github.com/jonesy200) | 1 | 1 | 0 |
 
