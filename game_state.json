@@ -2,63 +2,61 @@
   "board": [
     [
       "",
-      "3",
-      "1",
-      "0",
-      "0"
+      "",
+      "",
+      "",
+      ""
     ],
     [
       "",
       "",
-      "1",
-      "0",
-      "0"
+      "",
+      "",
+      ""
     ],
     [
       "",
-      "3",
-      "1",
-      "0",
-      "0"
+      "",
+      "",
+      "",
+      ""
     ],
     [
       "",
-      "2",
-      "0",
-      "0",
-      "0"
+      "",
+      "",
+      "",
+      ""
     ],
     [
       "",
-      "1",
-      "0",
-      "0",
-      "0"
+      "",
+      "",
+      "",
+      ""
     ]
   ],
   "current_turn": "Reveal",
   "game_status": "ongoing",
   "winner": null,
-  "last_winner": "Players",
-  "last_result": "Board cleared",
-  "last_winners": [
-    "rowkav09"
-  ],
+  "last_winner": null,
+  "last_result": "Mine triggered",
+  "last_winners": [],
   "human_wins": 1,
-  "ai_wins": 1,
+  "ai_wins": 2,
   "draws": 2,
-  "total_games": 4,
-  "total_human_moves": 17,
+  "total_games": 5,
+  "total_human_moves": 18,
   "total_ai_moves": 12,
-  "update_samples": 12,
-  "total_update_ms": 512,
-  "avg_update_ms": 43,
+  "update_samples": 13,
+  "total_update_ms": 514,
+  "avg_update_ms": 40,
   "total_update_seconds": 1,
   "avg_update_seconds": 0,
   "player_stats": {
     "rowkav09": {
-      "moves_placed": 15,
-      "games_played": 4,
+      "moves_placed": 16,
+      "games_played": 5,
       "wins_contributed": 1,
       "human_wins": 1,
       "draws": 2
@@ -78,108 +76,84 @@
       "draws": 0
     }
   },
-  "current_game_contributors": [
-    "rowkav09",
-    "rowkav09"
-  ],
+  "current_game_contributors": [],
   "users_moved": [],
   "revealed": [
     [
       false,
-      true,
-      true,
-      true,
-      true
+      false,
+      false,
+      false,
+      false
     ],
     [
       false,
       false,
-      true,
-      true,
-      true
+      false,
+      false,
+      false
     ],
     [
       false,
-      true,
-      true,
-      true,
-      true
+      false,
+      false,
+      false,
+      false
     ],
     [
       false,
-      true,
-      true,
-      true,
-      true
+      false,
+      false,
+      false,
+      false
     ],
     [
       false,
-      true,
-      true,
-      true,
-      true
+      false,
+      false,
+      false,
+      false
     ]
   ],
-  "mines": [
-    [
-      0,
-      0
-    ],
-    [
-      1,
-      0
-    ],
-    [
-      1,
-      1
-    ],
-    [
-      2,
-      0
-    ],
-    [
-      4,
-      0
-    ]
-  ],
+  "mines": [],
   "adjacent_counts": [
     [
       0,
-      3,
-      1,
+      0,
+      0,
       0,
       0
     ],
     [
       0,
       0,
-      1,
-      0,
-      0
-    ],
-    [
-      0,
-      3,
-      1,
-      0,
-      0
-    ],
-    [
-      2,
-      2,
       0,
       0,
       0
     ],
     [
       0,
-      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
       0,
       0,
       0
     ]
   ],
-  "board_ready": true,
+  "board_ready": false,
   "mine_count": 5,
   "last_triggered_mine": null
 }
