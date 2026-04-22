@@ -1,4 +1,4 @@
-name: README Tic Tac Toe
+name: README Minesweeper
 
 on:
   issues:
@@ -47,16 +47,16 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v6
         with:
-          commit-message: "Update Tic Tac Toe game state"
-          title: "Tic Tac Toe move from issue #${{ github.event.issue.number }}"
+          commit-message: "Update README Minesweeper game state"
+          title: "Minesweeper reveal from issue #${{ github.event.issue.number }}"
           body: |
-            Auto-generated move update from issue #${{ github.event.issue.number }}.
+            Auto-generated board update from issue #${{ github.event.issue.number }}.
 
             This PR updates:
             - `game_state.json`
             - `README.md`
 
-            This PR is auto-merged by workflow to publish the move.
+            This PR is auto-merged by workflow to publish the reveal.
             If auto-merge is blocked by repository protection, merge manually.
 
             Issue Number: ${{ github.event.issue.number }}
@@ -65,7 +65,7 @@ jobs:
             Last Result: ${{ steps.process.outputs.last_result }}
             Credited Win: ${{ steps.process.outputs.credited_win }}
             Player Stats: ${{ steps.process.outputs.player_stats }}
-          branch: "tictactoe/issue-${{ github.event.issue.number }}"
+          branch: "minesweeper/issue-${{ github.event.issue.number }}"
           delete-branch: true
           author: "${{ github.repository_owner }} <${{ github.repository_owner }}@users.noreply.github.com>"
           committer: "${{ github.repository_owner }} <${{ github.repository_owner }}@users.noreply.github.com>"
@@ -114,7 +114,7 @@ jobs:
           CREDITED_WIN: ${{ steps.process.outputs.credited_win }}
           LAST_RESULT: ${{ steps.process.outputs.last_result }}
           HUMAN_MOVE: ${{ steps.process.outputs.human_move }}
-          AI_MOVE: ${{ steps.process.outputs.ai_move }}
+          MOVE_RESULT: ${{ steps.process.outputs.move_result }}
           MOVE_PROCESSING_MS: ${{ steps.process.outputs.move_processing_ms }}
           PR_MERGED: ${{ steps.mergepr.outputs.merged }}
           MERGE_NOTE: ${{ steps.mergepr.outputs.merge_note }}
@@ -124,31 +124,31 @@ jobs:
             const prUrl = process.env.PR_URL;
             const prMerged = process.env.PR_MERGED === 'true';
             const mergeNote = process.env.MERGE_NOTE || '';
-            const stats = process.env.PLAYER_STATS || 'moves=0, games=0, win_contributions=0';
+            const stats = process.env.PLAYER_STATS || 'reveals=0, games=0, board_clears=0';
             const statsBadges = process.env.PLAYER_STATS_BADGES || '';
             const credited = process.env.CREDITED_WIN === 'true';
             const lastResult = process.env.LAST_RESULT || 'No finished games yet';
             const humanMove = process.env.HUMAN_MOVE || '-';
-            const aiMove = process.env.AI_MOVE || '-';
+            const moveResult = process.env.MOVE_RESULT || '-';
             const createdAt = new Date(context.payload.issue.created_at).getTime();
             const now = Date.now();
             const actionLatencySec = Math.max(0, Math.round((now - createdAt) / 1000));
             const approvalNote = prUrl && prMerged
-              ? `\n\nMove PR ${prUrl} was auto-merged. Your move and AI response are now applied.`
+              ? `\n\nBoard PR ${prUrl} was auto-merged. Your reveal is now applied.`
               : prUrl
-              ? `\n\nA PR was created: ${prUrl}\nAuto-merge could not complete, so merge it manually to apply the move.`
-              : '\n\nNo PR was created (invalid move or no state change).';
+              ? `\n\nA PR was created: ${prUrl}\nAuto-merge could not complete, so merge it manually to apply the reveal.`
+              : '\n\nNo PR was created (invalid reveal or no state change).';
             const nextSteps = prUrl && prMerged
               ? '\n\nNext steps:\n1) The merge follow-up workflow will comment with final timing and credited stats.\n2) Typical end-to-end update time: under 1 minute.'
               : '\n\nNext steps:\n1) Merge the PR if auto-merge was blocked.\n2) After merge, this issue gets a follow-up with credited stats and timing.\n3) Typical end-to-end update time: 1-3 minutes.';
             const badgesNote = statsBadges
               ? `\n\nCurrent player stats:\n${statsBadges}`
               : `\n\nCurrent player stats: ${stats}`;
-            const moveNote = `\n\nYour move: ${humanMove}\nAI move: ${aiMove}\nAction latency: ${actionLatencySec}s`;
+            const moveNote = `\n\nRevealed tile: ${humanMove}\nReveal result: ${moveResult}\nAction latency: ${actionLatencySec}s`;
             const creditOwnerNote = '\n\nAuthorship credit: game update commits are authored as @${{ github.repository_owner }}.';
             const mergeNoteText = mergeNote ? `\n\nMerge status: ${mergeNote}` : '';
             const creditNote = credited
-              ? `\nYou were credited with a win contribution in this round. Last result: ${lastResult}`
+              ? `\nYou were credited with a board clear in this round. Last result: ${lastResult}`
               : '';
             await github.rest.issues.createComment({
               owner: context.repo.owner,
@@ -168,8 +168,8 @@ jobs:
             const prUrl = process.env.PR_URL;
             const mergeNote = process.env.MERGE_NOTE || 'No merge status available.';
             const fallback = prUrl
-              ? `Move processed. PR: ${prUrl}\nMerge status: ${mergeNote}`
-              : 'Move processed but no PR was created. Check workflow logs for details.';
+              ? `Reveal processed. PR: ${prUrl}\nMerge status: ${mergeNote}`
+              : 'Reveal processed but no PR was created. Check workflow logs for details.';
 
             await github.rest.issues.createComment({
               owner: context.repo.owner,

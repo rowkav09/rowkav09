@@ -3,24 +3,44 @@
     [
       "",
       "",
-      ""
-    ],
-    [
       "",
       "",
       ""
     ],
     [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "",
       "",
       "",
       ""
     ]
   ],
-  "current_turn": "X",
+  "current_turn": "Reveal",
   "game_status": "ongoing",
   "winner": null,
   "last_winner": null,
-  "last_result": "Draw",
+  "last_result": "New Minesweeper board ready",
   "last_winners": [],
   "human_wins": 0,
   "ai_wins": 1,
@@ -57,5 +77,83 @@
     }
   },
   "current_game_contributors": [],
-  "users_moved": []
+  "users_moved": [],
+  "revealed": [
+    [
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  ],
+  "mines": [],
+  "adjacent_counts": [
+    [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  ],
+  "board_ready": false,
+  "mine_count": 5,
+  "last_triggered_mine": null
 }
