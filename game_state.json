@@ -10,30 +10,30 @@
     [
       "",
       "",
-      "",
-      "",
-      ""
+      "3",
+      "2",
+      "1"
     ],
     [
       "",
       "",
-      "",
-      "",
-      ""
+      "1",
+      "0",
+      "0"
     ],
     [
       "",
       "",
-      "",
-      "",
-      ""
+      "1",
+      "0",
+      "0"
     ],
     [
       "",
       "",
-      "",
-      "",
-      ""
+      "1",
+      "0",
+      "0"
     ]
   ],
   "current_turn": "Reveal",
@@ -46,16 +46,16 @@
   "ai_wins": 2,
   "draws": 2,
   "total_games": 5,
-  "total_human_moves": 18,
+  "total_human_moves": 19,
   "total_ai_moves": 12,
-  "update_samples": 13,
-  "total_update_ms": 514,
-  "avg_update_ms": 40,
+  "update_samples": 14,
+  "total_update_ms": 516,
+  "avg_update_ms": 37,
   "total_update_seconds": 1,
   "avg_update_seconds": 0,
   "player_stats": {
     "rowkav09": {
-      "moves_placed": 16,
+      "moves_placed": 17,
       "games_played": 5,
       "wins_contributed": 1,
       "human_wins": 1,
@@ -76,7 +76,9 @@
       "draws": 0
     }
   },
-  "current_game_contributors": [],
+  "current_game_contributors": [
+    "rowkav09"
+  ],
   "users_moved": [],
   "revealed": [
     [
@@ -89,71 +91,92 @@
     [
       false,
       false,
-      false,
-      false,
-      false
+      true,
+      true,
+      true
     ],
     [
       false,
       false,
-      false,
-      false,
-      false
+      true,
+      true,
+      true
     ],
     [
       false,
       false,
-      false,
-      false,
-      false
+      true,
+      true,
+      true
     ],
     [
       false,
       false,
-      false,
-      false,
-      false
+      true,
+      true,
+      true
     ]
   ],
-  "mines": [],
+  "mines": [
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      4,
+      1
+    ]
+  ],
   "adjacent_counts": [
     [
+      1,
+      2,
       0,
       0,
+      1
+    ],
+    [
+      2,
       0,
+      3,
+      2,
+      1
+    ],
+    [
+      0,
+      2,
+      1,
       0,
       0
     ],
     [
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
+      2,
+      2,
+      1,
       0,
       0
     ],
     [
+      1,
       0,
-      0,
-      0,
-      0,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
+      1,
       0,
       0
     ]
   ],
-  "board_ready": false,
+  "board_ready": true,
   "mine_count": 5,
   "last_triggered_mine": null
 }
