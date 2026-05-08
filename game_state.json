@@ -30,7 +30,7 @@
     ],
     [
       "",
-      "",
+      "1",
       "1",
       "0",
       "0"
@@ -46,11 +46,11 @@
   "ai_wins": 3,
   "draws": 2,
   "total_games": 6,
-  "total_human_moves": 21,
+  "total_human_moves": 22,
   "total_ai_moves": 12,
-  "update_samples": 16,
-  "total_update_ms": 521,
-  "avg_update_ms": 33,
+  "update_samples": 17,
+  "total_update_ms": 523,
+  "avg_update_ms": 31,
   "total_update_seconds": 1,
   "avg_update_seconds": 0,
   "player_stats": {
@@ -76,7 +76,7 @@
       "draws": 0
     },
     "bubsee": {
-      "moves_placed": 1,
+      "moves_placed": 2,
       "games_played": 0,
       "wins_contributed": 0,
       "human_wins": 0,
@@ -84,6 +84,7 @@
     }
   },
   "current_game_contributors": [
+    "bubsee",
     "bubsee"
   ],
   "users_moved": [],
@@ -118,7 +119,7 @@
     ],
     [
       false,
-      false,
+      true,
       true,
       true,
       true
