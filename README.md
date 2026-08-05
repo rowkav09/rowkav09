@@ -1,7 +1,7 @@
 ## GitHub Stats
-![](https://komarev.com/ghpvc/?username=rowkav09&style=plastic&color=blueviolet)
+![](https://komarev.com/ghpvc/?username=rowkav09&style=flat&color=blue) [![](https://ghstats.dev/api/mini?username=rowkav09&metric=stars&style=flat&color=blue)](https://github.com/rowkav09/GitHub-profile-stats)
 
-[![GitHub Stats](https://ghstats.dev/api/card?username=rowkav09&hide=issues%2Cstreak%2Cweek%2Ctrend%2Cavg%2Cgrade%2Ccontributions&order=followers%2Cstars%2Ccommits%2Cprs%2Cactive_day%2Crepos&size=compact)](https://github.com/rowkav09/GitHub-profile-stats)
+[![GitHub Stats](https://ghstats.dev/api/card?username=rowkav09&hide=issues%2Cstreak%2Cweek%2Ctrend%2Cavg%2Cgrade%2Ccontributions&order=followers%2Cstars%2Ccommits%2Cprs%2Cactive_day%2Crepos&size=compact)](https://github.com/rowkav09/GitHub-profile-stats) 
 
 [![Top Languages](https://ghstats.dev/api/langs?username=rowkav09)](https://github.com/rowkav09/GitHub-profile-stats)
 
