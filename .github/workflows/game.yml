@@ -47,7 +47,10 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v6
         with:
-          commit-message: "Update Tic Tac Toe game state"
+          commit-message: |
+            Update Tic Tac Toe game state
+
+            Co-authored-by: rowkav0809 <rowkav0808@highgateschool.org.uk>
           title: "Tic Tac Toe move from issue #${{ github.event.issue.number }}"
           body: |
             Auto-generated move update from issue #${{ github.event.issue.number }}.
