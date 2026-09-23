@@ -1,29 +1,23 @@
-17, London. I build things, mostly self-hosted.
+# Hi, I'm Rowan 👋
 
-**Projects**
+17, London. I build things, mostly self-hosted - currently into homelabbing, open source, automation and agentic AI.
+
+## Projects
 - [GitHub-profile-stats](https://github.com/rowkavdev/GitHub-profile-stats) - live stat cards for your GitHub README, one line to embed - [ghstats.dev](https://ghstats.dev)
 - [nowplaying](https://github.com/rowkavdev/nowplaying) - live now-playing cards + Discord Rich Presence for Plex, Jellyfin, Navidrome and Emby
 - [musearr](https://github.com/rowkavdev/musearr) - self-hosted, local-first intelligence layer for a Plex music library
 - [halftone](https://github.com/rowkav09/halftone) - ASCII art from images using halftone dithering, in the browser
 - [CCO-scripts-library](https://github.com/rowkav09/CCO-scripts-library) - open-source userscript collection for Case Clicker Online
 
-**Setup**
+## Setup
 Self-host 20+ apps for family and friends on my own server - media, auth, monitoring. Local-first AI for code review, indexing and automation: Kimi K2 for heavy work, Qwen3-30B-A3B for fast local inference.
 
-**Hardware**
-DTE: a USB-C hub with a screen showing per-port speed, data and charging watts. Kickstarter in the coming year.
+## Hardware
+Currently working on a USB-C hub with a screen that shows per-port speed, data and charging watts. Kickstarter in the coming year.
 
 ---
 
-
 ![](https://komarev.com/ghpvc/?username=rowkav09&style=flat&color=blue&base=2000) [![](https://ghstats.dev/api/mini?username=rowkav09&metric=stars&style=flat&color=blue)](https://github.com/rowkav09/GitHub-profile-stats)
-## Hi, I'm Rowan 👋
-
-I'm currently building **[ghstats.dev](https://ghstats.dev)**, **Halftone**, **Musearr**, and **GitAscii**.
-
-I'm passionate about **homelabbing**, **self-hosting**, **open source**, **DevOps**, **CI/CD**, **automation**, and **agentic AI**.
-
-I enjoy building useful tools, experimenting with infrastructure, and contributing to open-source projects.
 ## GitHub Stats
 ![GitHub Stats Card](https://ghstats.dev/api/card?username=rowkav09&theme=nightowl&show_ring=false&size=compact&hide=repos%2Ccommits%2Cstreak%2Cweek%2Ctrend%2Cavg%2Cactive_day%2Cgrade) 
 
