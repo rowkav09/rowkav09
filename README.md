@@ -1,3 +1,20 @@
+17, London. I build things, mostly self-hosted.
+
+**Projects**
+- [GitHub-profile-stats](https://github.com/rowkavdev/GitHub-profile-stats) - live stat cards for your GitHub README, one line to embed - [ghstats.dev](https://ghstats.dev)
+- [nowplaying](https://github.com/rowkavdev/nowplaying) - live now-playing cards + Discord Rich Presence for Plex, Jellyfin, Navidrome and Emby
+- [musearr](https://github.com/rowkavdev/musearr) - self-hosted, local-first intelligence layer for a Plex music library
+- [halftone](https://github.com/rowkav09/halftone) - ASCII art from images using halftone dithering, in the browser
+- [CCO-scripts-library](https://github.com/rowkav09/CCO-scripts-library) - open-source userscript collection for Case Clicker Online
+
+**Setup**
+Self-host 20+ apps for family and friends on my own server - media, auth, monitoring. Local-first AI for code review, indexing and automation: Kimi K2 for heavy work, Qwen3-30B-A3B for fast local inference.
+
+**Hardware**
+DTE: a USB-C hub with a screen showing per-port speed, data and charging watts. Kickstarter in the coming year.
+
+---
+
 
 ![](https://komarev.com/ghpvc/?username=rowkav09&style=flat&color=blue&base=2000) [![](https://ghstats.dev/api/mini?username=rowkav09&metric=stars&style=flat&color=blue)](https://github.com/rowkav09/GitHub-profile-stats)
 ## Hi, I'm Rowan 👋
