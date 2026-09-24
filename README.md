@@ -17,12 +17,11 @@ Currently working on a USB-C hub with a screen that shows per-port speed, data a
 
 ---
 
-![](https://komarev.com/ghpvc/?username=rowkav09&style=flat&color=blue&base=2000) [![](https://ghstats.dev/api/mini?username=rowkav09&metric=stars&style=flat&color=blue)](https://github.com/rowkav09/GitHub-profile-stats)
+![](https://komarev.com/ghpvc/?username=rowkav09&style=flat&color=blue&base=2000) [![](https://ghstats.dev/api/mini?username=rowkav09&metric=stars&style=flat&color=blue&orgs=rowkavdev)](https://github.com/rowkavdev/GitHub-profile-stats)
 ## GitHub Stats
 ![GitHub Stats Card](https://ghstats.dev/api/card?username=rowkav09&theme=nightowl&show_ring=false&size=compact&orgs=rowkavdev&hide=repos%2Ccommits%2Cstreak%2Cweek%2Ctrend%2Cavg%2Cactive_day%2Cgrade) 
 
 ![Top Languages](https://ghstats.dev/api/langs?username=rowkav09&theme=nightowl&orgs=rowkavdev)
 
-> Built with [GitHub Profile Stats](https://github.com/rowkav09/GitHub-profile-stats) — free, open-source stats cards for your README made my me. Try it at [ghstats.dev](https://ghstats.dev)!
-
+> Built with [GitHub Profile Stats](https://github.com/rowkavdev/GitHub-profile-stats) — free, open-source stats cards for your README made my me. Try it at [ghstats.dev](https://ghstats.dev)!
 
