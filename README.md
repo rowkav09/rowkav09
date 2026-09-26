@@ -4,6 +4,7 @@
 
 ## Projects
 - [GitHub-profile-stats](https://github.com/rowkavdev/GitHub-profile-stats) - live stat cards for your GitHub README, one line to embed - [ghstats.dev](https://ghstats.dev)
+- [ghostdeps](https://github.com/rowkavdev/ghostdeps) - working on a GitHub App that finds unused and risky dependencies in PRs, in any language, and applies the removals you tick
 - [nowplaying](https://github.com/rowkavdev/nowplaying) - live now-playing cards + Discord Rich Presence for Plex, Jellyfin, Navidrome and Emby
 - [musearr](https://github.com/rowkavdev/musearr) - self-hosted, local-first intelligence layer for a Plex music library
 - [halftone](https://github.com/rowkav09/halftone) - ASCII art from images using halftone dithering, in the browser
