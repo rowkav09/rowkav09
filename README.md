@@ -5,8 +5,10 @@
 ## Projects
 - [GitHub-profile-stats](https://github.com/rowkavdev/GitHub-profile-stats) - live stat cards for your GitHub README, one line to embed - [ghstats.dev](https://ghstats.dev)
 - [ghostdeps](https://github.com/rowkavdev/ghostdeps) - GitHub App that finds unused and risky dependencies in PRs, in any language, and applies the removals you tick
+- [spec2mcp](https://github.com/rowkavdev/spec2mcp) - turns an OpenAPI spec into an MCP server
 - [nowplaying](https://github.com/rowkavdev/nowplaying) - live now-playing cards + Discord Rich Presence for Plex, Jellyfin, Navidrome and Emby
 - [musearr](https://github.com/rowkavdev/musearr) - self-hosted, local-first intelligence layer for a Plex music library
+- [RePlays (linux-build branch)](https://github.com/rowkav09/RePlays/tree/linux-build) - my fork of [lulzsun/RePlays](https://github.com/lulzsun/RePlays), the game recording manager. I'm porting it to Linux: fixes for libobs, webkit2gtk, X11 window detection and audio capture, plus a Linux build workflow in CI
 - [halftone](https://github.com/rowkav09/halftone) - ASCII art from images using halftone dithering, in the browser
 - [CCO-scripts-library](https://github.com/rowkav09/CCO-scripts-library) - open-source userscript collection for Case Clicker Online
 
