@@ -20,7 +20,9 @@ Currently working on a USB-C hub with a screen that shows per-port speed, data a
 
 ---
 
-![](https://komarev.com/ghpvc/?username=rowkav09&style=flat&color=blue&base=2000) [![](https://ghstats.dev/api/mini?username=rowkav09&metric=stars&style=flat&color=blue&orgs=rowkavdev)](https://github.com/rowkavdev/GitHub-profile-stats)
+![](https://komarev.com/ghpvc/?username=rowkav09&style=flat&color=blue&base=2000) [![](https://ghstats.dev/api/mini?username=rowkav09&metric=stars&style=flat&color=blue&orgs=rowkavdev)](https://github.com/rowkavdev/GitHub-profile-stats) ![Lines Added](https://img.shields.io/badge/lines%20added-128.4k-brightgreen)
+![Lines Deleted](https://img.shields.io/badge/lines%20deleted-42.7k-red)
+
 ## GitHub Stats
 ![GitHub Stats Card](https://ghstats.dev/api/card?username=rowkav09&theme=nightowl&show_ring=false&size=compact&orgs=rowkavdev&hide=repos%2Ccommits%2Cstreak%2Cweek%2Ctrend%2Cavg%2Cactive_day%2Cgrade) 
 
