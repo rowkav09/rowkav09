@@ -84,8 +84,7 @@ def main():
     block = "\n".join((
         START,
         f"{badge('public lines added', added, 'brightgreen')} {badge('public lines deleted', deleted, 'red')}",
-        f"<sub>My commits across {len(repos)} public, non-fork repositories on their default branches. "
-        "GitHub excludes merge commits; this counts changed lines, including generated files. Updated daily.</sub>",
+        f"My commits across {len(repos)} public, non-fork repositories on their default branches.",
         END,
     ))
     readme = README.read_text()
