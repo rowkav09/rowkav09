@@ -22,8 +22,8 @@ Currently working on a USB-C hub with a screen that shows per-port speed, data a
 
 ![](https://komarev.com/ghpvc/?username=rowkav09&style=flat&color=blue&base=2000) [![](https://ghstats.dev/api/mini?username=rowkav09&metric=stars&style=flat&color=blue&orgs=rowkavdev)](https://github.com/rowkavdev/GitHub-profile-stats)
 <!-- public-loc:start -->
-![Public Lines Added](https://img.shields.io/badge/public%20lines%20added-1%2C477%2C566-brightgreen) ![Public Lines Deleted](https://img.shields.io/badge/public%20lines%20deleted-802%2C871-red)
-My commits across 40 public, non-fork repositories on their default branches.
+![Public Lines Added](https://img.shields.io/badge/public%20lines%20added-1%2C477%2C809-brightgreen) ![Public Lines Deleted](https://img.shields.io/badge/public%20lines%20deleted-802%2C872-red)
+My commits across 41 public, non-fork repositories on their default branches.
 <!-- public-loc:end -->
 
 ## GitHub Stats
